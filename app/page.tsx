@@ -8,7 +8,7 @@ import Home1 from "./atom/home1";
 export default function page() {
   return (
  <>
- <Home1></Home1>
+ <Home></Home>
  </>
   );
 }

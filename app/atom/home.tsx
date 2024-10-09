@@ -1,91 +1,183 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import About from "../atom/about";
 import SwipeableTextMobileStepper from "../atom/carousel";
 import Feedback from "../atom/feedback";
 import { Dialog, DialogContent, DialogDescription, DialogHeader } from "../atom/dailog";
 import { DialogTitle, Rating } from "@mui/material";
 import Apponitment from "./appointment";
+import Ainput from "./input";
 
 
 
 export default function Home() {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDialogOpen1, setIsDialogOpen1] = useState(false);
 
-  
+
+  const giverating = async (row: any) => {
+    setIsDialogOpen1(true)
+  };
+
+
   const takeappointment = async (row: any) => {
     setIsDialogOpen(true)
-};
+  };
+ 
 
-    return (
-   <>
-   <div className="p-2 grid grid-cols-12 ">
-    <div className="col-span-12">
-   <marquee className=" mt-16 text-lg text-xl bg-blue-300" >ajay mulity hospital nera sk hospital station road sikar searvice provided 24 * 7</marquee>
-   </div>
-   <div className="col-span-12"><SwipeableTextMobileStepper/> </div>
-   <div className="col-span-12 capitalize font-bold text-center lg:text-2xl text-xl"><span>--</span><span>We are hare for you</span><span>--</span></div>
-<div className="col-span-12"><Apponitment></Apponitment></div>
+  return (
+    <>
+      <div className="p-2 relative grid grid-cols-12 ">
+        <div className="col-span-12">
+          <marquee className=" capitalize font-bold lg:mt-[70px] mt-16 text-lg text-xl bg-blue-300" >ajay mulity hospital nera sk hospital station road sikar searvice provided 24 * 7</marquee>
+        </div>
+        <div className="col-span-12"><SwipeableTextMobileStepper /> </div>
+        <div className="flex flex-wrap col-span-12 justify-center items-start w-full my-16 contain_1">
+    <div className="w-[25rem] h-auto img_box">
+        <img src="/man.jpeg" alt="" className="w-full h-auto" />
+    </div>
+    <div className="w-[25rem] h-auto text-box text-secondary-color">
+        <h1 className="text-2xl font-bold heading_1">
+            Welcome To MediLink <br />Central Hospital
+        </h1>
 
-    <div className="lg:col-span-6 col-span-12 lg:h-[500px] h-[250px]  font-bold flex justify-end items-start p-2 mt-2 bg-[url('/dr.jpeg')] bg-no-repeat bg-cover gap-2  bg-center   ">
-   <button className="lg:px-8  bg-green-500 rounded px-2 hover:scale-110" onClick={takeappointment}><p className="text-xl font-bold">Appointmant</p><p>book now</p></button>
+        <p className="mt-4 font-bold para_1 leading-6">
+            Hospital imply dummy text of the printing and typesetting industry been
+            the industry.
+        </p>
+
+        <p className="mt-4 para_2 leading-6">
+            Standard dummy text since when an unknown printer took a galley
+            MediPoint Lorem ipsum dolor sit amet, consetetur sadipscing elitr. At
+            accusam aliquyam's standard dummy text since when an unknown printer
+            took a galley consetetur.
+            <img src="/assets/images.png" alt="" className="h-[7rem]" />
+        </p>
+    </div>
+
+    <div className="w-[20rem] h-auto details-buttons flex flex-col space-y-4 ml-4">
+        <button onClick={takeappointment} className="dt-btn flex items-center justify-start w-full p-4 rounded bg-btn-background text-primary-color hover:bg-btn-hover">
+            <i className="fa-solid fa-location-dot icon"></i>
+            Request Appointment
+            <i className="fa-solid fa-angle-right icon-right ml-auto"></i>
+        </button>
+
+        <button onClick={giverating} className="dt-btn flex items-center justify-start w-full p-4 rounded bg-btn-background text-primary-color hover:bg-btn-hover">
+            <i className="fa-solid fa-user-doctor icon"></i>
+            Give us Rating
+            <i className="fa-solid fa-angle-right icon-right ml-auto"></i>
+        </button>
+
+        <button className="dt-btn flex items-center justify-start w-full p-4 rounded bg-btn-background text-primary-color hover:bg-btn-hover">
+            <i className="fa-solid fa-location-dot icon"></i>
+            Location
+            <i className="fa-solid fa-angle-right icon-right ml-auto"></i>
+        </button>
+
+        <button className="dt-btn flex items-center justify-start w-full p-4 rounded bg-btn-background text-primary-color hover:bg-btn-hover">
+            <i className="fa-solid fa-phone icon"></i>
+            Emergency Contact
+            <i className="fa-solid fa-angle-right icon-right ml-auto"></i>
+        </button>
+    </div>
+        </div>
+ 
+
+        {/* rating             */}
+        <div className="col-span-12">
+          <div className="mt-2  grid grid-cols-12 gap-4">
+            <div className="lg:col-span-3 col-span-12 p-4 flex flex-col items-center justify-center space-y-4">
+              <img className="rounded-full" src="profile.jpeg" alt="Profile" />
+              <Rating name="read-only" value={3} readOnly />
+              <p className="capitalize text-base w-[220px] font-serif text-center break-words">
+                Service of the hospital is very good
+              </p>
+            </div>
+            <div className="lg:col-span-3 col-span-12 p-4 flex flex-col items-center justify-center space-y-4">
+              <img className="rounded-full" src="profile.jpeg" alt="Profile" />
+              <Rating name="read-only" value={3} readOnly />
+              <p className="capitalize text-base w-[220px] font-serif text-center break-words">
+                Service of the hospital is very good
+              </p>
+            </div>
+            <div className="lg:col-span-3 col-span-12 p-4 flex flex-col items-center justify-center space-y-4">
+              <img className="rounded-full" src="profile.jpeg" alt="Profile" />
+              <Rating name="read-only" value={3} readOnly />
+              <p className="capitalize text-base w-[220px] font-serif text-center break-words">
+                Service of the hospital is very good
+              </p>
+            </div>
+            <div className="lg:col-span-3 col-span-12 p-4 flex flex-col items-center justify-center space-y-4">
+              <img className="rounded-full" src="profile.jpeg" alt="Profile" />
+              <Rating name="read-only" value={3} readOnly />
+              <p className="capitalize text-base w-[220px] font-serif text-center break-words">
+                Service of the hospital is very good
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <Dialog open={isDialogOpen1} onOpenChange={setIsDialogOpen1}>
+        <DialogContent className="w-full max-w-screen-md xs:h-auto overflow-hidden">
+          <DialogHeader>
+            <DialogTitle className=""><DialogTitle>For give us reating please fill the form</DialogTitle></DialogTitle>
+            <hr className="bg-body-color mx-2" />
+            <DialogDescription>
+              <div className="grid grid-cols-12 gap-2 ">
+                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+                  <Ainput title='Name'></Ainput>
                 </div>
-                <div className="lg:col-span-6 col-span-12 font-serif shadow-xl lg:p-10 p-4 lg:m-10  lg:text-xl text-sm font-semibold  ">
-                   <p className=""> We are committed to providing access to affordable and innovative medicines, driven by our purpose of ‘Good Health Can’t Wait’.</p>
-                   <p className="mt-6"> Our products and services are spread across our core businesses of Active Pharmaceutical Ingredients (API), generics, branded generics, biosimilars and over-the-counter pharmaceutical products around the world. We work towards meeting unmet patients needs in the areas of gastro-enterology, cardiovascular, diabetology, oncology, pain management and dermatology. We are investing in businesses of the future including drug discovery, clinically-differentiated assets and digital healthcare.</p>
+                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+                  <Ainput title='Your Image'></Ainput>
                 </div>
-   <div className="col-span-12">
-   <div className="pt-20 relative grid grid-cols-12 gap-4">
-  <button className="absolute top-4 right-4 bg-green-500 rounded px-4 py-2 hover:scale-110 transition-transform duration-300 z-10" onClick={takeappointment}>
-    <p className="text-xl font-bold">give us rating</p>
-  </button>
-
-  <div className="lg:col-span-3 col-span-12 p-4 flex flex-col items-center justify-center space-y-4">
-    <img className="rounded-full" src="profile.jpeg" alt="Profile" />
-    <Rating name="read-only" value={3} readOnly />
-    <p className="capitalize text-base w-[220px] font-serif text-center break-words">
-      Service of the hospital is very good
-    </p>
-  </div>
-  <div className="lg:col-span-3 col-span-12 p-4 flex flex-col items-center justify-center space-y-4">
-    <img className="rounded-full" src="profile.jpeg" alt="Profile" />
-    <Rating name="read-only" value={3} readOnly />
-    <p className="capitalize text-base w-[220px] font-serif text-center break-words">
-      Service of the hospital is very good
-    </p>
-  </div>
-  <div className="lg:col-span-3 col-span-12 p-4 flex flex-col items-center justify-center space-y-4">
-    <img className="rounded-full" src="profile.jpeg" alt="Profile" />
-    <Rating name="read-only" value={3} readOnly />
-    <p className="capitalize text-base w-[220px] font-serif text-center break-words">
-      Service of the hospital is very good
-    </p>
-  </div>
-  <div className="lg:col-span-3 col-span-12 p-4 flex flex-col items-center justify-center space-y-4">
-    <img className="rounded-full" src="profile.jpeg" alt="Profile" />
-    <Rating name="read-only" value={3} readOnly />
-    <p className="capitalize text-base w-[220px] font-serif text-center break-words">
-      Service of the hospital is very good
-    </p>
-  </div>
-</div>
-
-   </div>
-   </div>
-            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DialogContent className="w-full max-w-screen-md xs:h-auto ">
+                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+                  <Ainput title='Reating'></Ainput>
+                </div>
+                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+                  <Ainput title='Feedback'></Ainput>
+                </div>
+                <div className='col-span-12 text-center mt-6'>
+                  <button className='hover:cursor-pointer bg-green-500 text-xl  px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-blue-600'>submit</button>
+                </div>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogContent className="w-full max-w-screen-md xs:h-auto overflow-hidden">
                     <DialogHeader>
-                        <DialogTitle className="mt-2 ml-3 flex "><DialogTitle>For Appointment Please Fill Form </DialogTitle></DialogTitle>
+                        <DialogTitle className=""><DialogTitle>For Appointment Please Fill Form </DialogTitle></DialogTitle>
                         <hr className="bg-body-color mx-2" />
                         <DialogDescription>
-                        <div  className="grid grid-cols-12 gap-2 p-4">
-hello</div>
+                        <div  className="grid grid-cols-12 gap-2 ">
+                          <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+<Ainput title='Name'></Ainput>
+                          </div>
+                          <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+<Ainput title='Mobile No.'></Ainput>
+                          </div>
+                          <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+<Ainput title='Date'></Ainput>
+                          </div>
+                          <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+<Ainput title='Department'></Ainput>
+                          </div>
+                          <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+<Ainput title='Doctor'></Ainput>
+                          </div>
+                          <div className='col-span-12 md:col-span-6 lg:col-span-6 mt-6'>
+                            <button className='hover:cursor-pointer bg-green-500 text-xl  px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-blue-600'>submit</button>
+                          </div>
+                          </div>
                         </DialogDescription>
                     </DialogHeader>
                 </DialogContent>
             </Dialog>
     </>
-    );
-  }
+  );
+}
