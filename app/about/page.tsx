@@ -6,7 +6,7 @@ import Apponitment from "../atom/appointment";
 
 export default function About() {
 
-    
+  
     return (
    <>
    <div className="p-2 grid grid-cols-12 gap-2">
