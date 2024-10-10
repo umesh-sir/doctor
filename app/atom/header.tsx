@@ -76,7 +76,7 @@ const takeappointment = async (row: any) => {
        <img className=" p-2 align-middle lg:h-[70px] h-16 w-20" src="dr.jpeg"></img>
        </div>
         <ul  className="lg:flex md:hidden hidden font-bold capitalize items-center  justify-between col-span-8">
-        <li className="hover:cursor-pointer text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={homebutton}>home</li>
+        <li className="hover:cursor-pointer rounded px-2 py-1 font-bold  transition duration-300 ease-in-out transform hover:-translate-y-0.5  hover:shadow-darkshadow text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={homebutton}>home</li>
         <li className="hover:cursor-pointer text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={aboutbutton}>about us</li>
         <li className="hover:cursor-pointer text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={departmentbutton}>department</li>
         <li className="hover:cursor-pointer text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={servicesbutton}>services</li>
