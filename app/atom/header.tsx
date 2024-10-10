@@ -70,7 +70,7 @@ const takeappointment = async (row: any) => {
 
  return (
         <>
-        
+        <div>ram</div>
       <div className="grid lg:fixed   md:fixed shadow-sm z-10 bg-blue-400 fixed lg:h-[70px] h-16 w-full   grid-cols-12">
        <div className="col-span-2">
        <img className=" p-2 align-middle lg:h-[70px] h-16 w-20" src="dr.jpeg"></img>
