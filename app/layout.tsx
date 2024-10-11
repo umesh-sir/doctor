@@ -4,7 +4,6 @@ import "./globals.css";
 import ResponsiveAppBar from "./atom/header";
 import Footer from "./atom/footer";
 import Header from "./atom/header";
-import Header1 from "./atom/header1";
 
 const inter = Inter({ subsets: ["latin"] });
 

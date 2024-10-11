@@ -31,7 +31,7 @@ export default function Department() {
     {departments.map((department, index) => (
     <div
         key={index}
-        className="lg:col-span-4 col-span-12 md:col-span-4 h-72 w-full rounded bg-blue-300 flex flex-col items-center transition-transform duration-300 ease-in-out hover:scale-105"
+        className="lg:col-span-4 col-span-12 md:col-span-4 h-72 w-full rounded bg-blue-300 flex flex-col items-center transition-transform duration-300 ease-in-out hover:scale-y-105"
     >
         <img className="rounded-full h-20 w-20 mb-2" src={department.img} alt={department.depart} />
         <div className="text-xl font-semibold text-center">{department.depart}</div>

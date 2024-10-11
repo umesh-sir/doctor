@@ -10,12 +10,13 @@ export default function About() {
     return (
    <>
    <div className="p-2 grid grid-cols-12 gap-2">
-    <div className="col-span-12 text-3xl font-bold flex justify-center items-center mt-16 h-40 bg-[url('/dr.jpeg')] bg-no-repeat bg-cover gap-2  bg-center   ">
+    {/* <div className="col-span-12 text-3xl font-bold flex justify-center items-center mt-16 h-40 bg-[url('/dr.jpeg')] bg-no-repeat bg-cover gap-2  bg-center   ">
      About Us
-    </div>
-    <div className="col-span-12 relative w-full flex items-center cursor-pointer ">
+    </div> */}
+    <div className="col-span-12 mt-16 relative w-full flex items-center cursor-pointer ">
     <img src="hero-img1.jpeg" alt="" className="w-full h-auto" />
-    <div className="absolute  left-10">
+  
+    <div className="absolute  left-20">
         <h1 className="text-3xl  ">
             We Take Care Of Your <br />Healthy Health <br />
         </h1>

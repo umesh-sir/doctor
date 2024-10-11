@@ -70,24 +70,23 @@ const takeappointment = async (row: any) => {
 
  return (
         <>
-       
       <div className="grid lg:fixed   md:fixed shadow-sm z-10 bg-blue-400 fixed lg:h-[70px] h-16 w-full   grid-cols-12">
-       <div className="col-span-2">
-       <img className=" p-2 align-middle lg:h-[70px] h-16 w-20" src="dr.jpeg"></img>
+       <div className="col-span-3">
+       <img className=" p-2 align-middle lg:h-[70px] h-16 w-28" src="logo.png"></img>
        </div>
-        <ul  className="lg:flex md:hidden hidden font-bold capitalize items-center  justify-between col-span-8">
-        <li className="hover:cursor-pointer rounded px-2 py-1 font-bold  transition duration-300 ease-in-out transform hover:-translate-y-0.5  hover:shadow-darkshadow text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={homebutton}>home</li>
-        <li className="hover:cursor-pointer rounded px-2 py-1 font-bold  transition duration-300 ease-in-out transform hover:-translate-y-0.5  hover:shadow-darkshadow text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={aboutbutton}>about us</li>
-        <li className="hover:cursor-pointer rounded px-2 py-1 font-bold  transition duration-300 ease-in-out transform hover:-translate-y-0.5  hover:shadow-darkshadow text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={departmentbutton}>department</li>
-        <li className="hover:cursor-pointer rounded px-2 py-1 font-bold  transition duration-300 ease-in-out transform hover:-translate-y-0.5  hover:shadow-darkshadow text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={servicesbutton}>services</li>
-        <li className="hover:cursor-pointer rounded px-2 py-1 font-bold  transition duration-300 ease-in-out transform hover:-translate-y-0.5  hover:shadow-darkshadow text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={docterbutton}>docter team</li>
-        {/* <li className="hover:cursor-pointer rounded px-2 py-1 font-bold  transition duration-300 ease-in-out transform hover:-translate-y-0.5  hover:shadow-darkshadow text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={corporatebutton}>our corporate</li> */}
-        <li className="hover:cursor-pointer rounded px-2 py-1 font-bold  transition duration-300 ease-in-out transform hover:-translate-y-0.5  hover:shadow-darkshadow text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={gallerybutton}>gallery</li>
+        <ul  className="lg:flex md:hidden hidden font-bold capitalize items-center  justify-between col-span-7">
+        <li className="hover:cursor-pointer rounded  transition duration-300 ease-in-out transform hover:-translate-y-0.5  hover:shadow-darkshadow text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={homebutton}>home</li>
+        <li className="hover:cursor-pointer rounded  transition duration-300 ease-in-out transform hover:-translate-y-0.5  hover:shadow-darkshadow text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={aboutbutton}>about us</li>
+        <li className="hover:cursor-pointer rounded  transition duration-300 ease-in-out transform hover:-translate-y-0.5  hover:shadow-darkshadow text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={departmentbutton}>department</li>
+        <li className="hover:cursor-pointer rounded  transition duration-300 ease-in-out transform hover:-translate-y-0.5  hover:shadow-darkshadow text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={servicesbutton}>services</li>
+        <li className="hover:cursor-pointer rounded  transition duration-300 ease-in-out transform hover:-translate-y-0.5  hover:shadow-darkshadow text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={docterbutton}>docter team</li>
+        {/* <li className="hover:cursor-pointer rounded  transition duration-300 ease-in-out transform hover:-translate-y-0.5  hover:shadow-darkshadow text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={corporatebutton}>our corporate</li> */}
+        <li className="hover:cursor-pointer rounded  transition duration-300 ease-in-out transform hover:-translate-y-0.5  hover:shadow-darkshadow text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={gallerybutton}>gallery</li>
         <li className="hover:cursor-pointer text-base font-bold bg-green-500 px-2 py-2 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={takeappointment}>apointment</li>
-        {/* <li className="hover:cursor-pointer rounded px-2 py-1 font-bold  transition duration-300 ease-in-out transform hover:-translate-y-0.5  hover:shadow-darkshadow text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={healthbutton}>health checkup plan</li> */}
+        {/* <li className="hover:cursor-pointer rounded  transition duration-300 ease-in-out transform hover:-translate-y-0.5  hover:shadow-darkshadow text-base font-bold px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-white" onClick={healthbutton}>health checkup plan</li> */}
         </ul>
       
-       <div className="col-span-8 capitalize text-2xl font-bold flex items-center lg:hidden justify-center">
+       <div className="col-span-7 capitalize text-2xl font-bold flex items-center lg:hidden justify-center">
          ajay hospital
        </div>
        <div className=" col-span-2 flex lg:justify-end lg:mr-10 items-center justify-center ">
