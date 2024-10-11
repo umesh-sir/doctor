@@ -3,10 +3,10 @@
 import Appointment from "../atom/appointment";
 
 const doctorsData = [
-    { id: 1, name: "Dr. John Smith", department: "Cardiology", photo: "about1.jpg" },
-    { id: 2, name: "Dr. Jane Doe", department: "Pediatrics", photo: "about1.jpg" },
-    { id: 3, name: "Dr. Alice Brown", department: "Orthopedics", photo: "about1.jpg" },
-    { id: 4, name: "Dr. Bob Johnson", department: "Emergency Services", photo: "about1.jpg" },
+    { id: 1, name: "Dr. John Smith", department: "Cardiology", photo: "drteam/about1.jpg" },
+    { id: 2, name: "Dr. Jane Doe", department: "Pediatrics", photo: "drteam/about1.jpg" },
+    { id: 3, name: "Dr. Alice Brown", department: "Orthopedics", photo: "drteam/about1.jpg" },
+    { id: 4, name: "Dr. Bob Johnson", department: "Emergency Services", photo: "drteam/about1.jpg" },
     // Add more doctors as needed
 ];
 

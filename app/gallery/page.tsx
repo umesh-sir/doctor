@@ -9,13 +9,13 @@ export default function Gallery() {
     const departments = [
         { img: 'dr.jpeg' },
         { img: 'logo.png' },
-        { img: 'surgery.png' },
-        { img: 'pediatrics.png' },
-        { img: 'orthopedics.png' },
-        { img: 'cardiology.png' },
-        { img: 'radiology.png' },
-        { img: 'neurology.png' },
-        { img: 'default.png' }
+        { img: 'service/surgery.png' },
+        { img: 'service/pediatrics.png' },
+        { img: 'service/orthopedics.png' },
+        { img: 'service/cardiology.png' },
+        { img: 'service/radiology.png' },
+        { img: 'service/neurology.png' },
+        { img: 'service/default.png' }
     ];
 
     const handleImageClick = (img) => {

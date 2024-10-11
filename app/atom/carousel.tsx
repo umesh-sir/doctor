@@ -17,27 +17,27 @@ const images = [
   {
     label: 'San Francisco – Oakland Bay Bridge, United States',
     imgPath:
-      'pic1.jpg',
+      'crosole/pic1.jpg',
   },
   {
     label: 'Bird',
     imgPath:
-      'hero-img1.jpeg',
+      'crosole/hero-img1.jpeg',
   },
   {
     label: 'Bali, Indonesia',
     imgPath:
-      'pic2.avif',
+      'crosole/pic2.avif',
   },
   {
     label: 'Goč, Serbia',
     imgPath:
-      'pic3.jpg',
+      'crosole/pic3.jpg',
   },
   {
     label: 'Goč, Serbia',
     imgPath:
-      'pic4.jfif',
+      'crosole/pic4.jfif',
   },
 ];
 

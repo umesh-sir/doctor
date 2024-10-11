@@ -7,18 +7,18 @@ import Apponitment from "../atom/appointment";
 export default function Services() {
 
   const departments = [
-    { img: 'emg.png', depart: 'Emergency Services', desc: 'Emergency Department is staffed 24/7 with experienced medical professionals ready to provide immediate care for urgent and life-threatening conditions.' },
-    { img: 'medi.png', depart: 'Internal Madicine ', desc: 'Internal medicine focuses on adult health, diagnosing and treating complex diseases, emphasizing preventive care and comprehensive management of chronic conditions.' },
-    { img: 'surgery.png', depart: 'General & Laparoscopic surgery ', desc: 'General and laparoscopic surgery involve diagnosing and treating conditions through minimally invasive techniques, enhancing recovery and reducing scarring compared to traditional surgery.' },
-    { img: 'pediatrics.png', depart: 'Pediatrics', desc: 'Pediatrics focuses on the health and development of infants, children, and adolescents, addressing their physical, emotional, and social well-being.' },
-    { img: 'orthopedics.png', depart: 'Orthopedics', desc: 'Orthopedics specializes in diagnosing, treating, and preventing musculoskeletal disorders, including bones, joints, ligaments, and muscles, to restore function and mobility.' },
-    { img: 'cardiology.png', depart: 'Cardiology', desc: 'Cardiology focuses on diagnosing and treating heart and vascular conditions, emphasizing prevention, management of diseases, and promoting overall cardiovascular health.' },
-    { img: 'radiology.png', depart: 'Radiology', desc: 'Radiology uses imaging techniques like X-rays, MRIs, and CT scans to diagnose and monitor diseases, guiding treatment decisions and patient care.' },
-    { img: 'neurology.png', depart: 'Neurology',desc:'Neurology focuses on diagnosing and treating disorders of the nervous system, including the brain, spinal cord, and peripheral nerves.' },
-    { img: 'default.png', depart: 'General Services', desc: 'This is the free service for all people.' },
-    { img: 'default.png', depart: 'General Services', desc: 'This is the free service for all people.' },
-    { img: 'default.png', depart: 'General Services', desc: 'This is the free service for all people.' },
-    { img: 'default.png', depart: 'General Services', desc: 'This is the free service for all people.' },
+    { img: ' service/emg.png', depart: 'Emergency Services', desc: 'Emergency Department is staffed 24/7 with experienced medical professionals ready to provide immediate care for urgent and life-threatening conditions.' },
+    { img: ' service/medi.png', depart: 'Internal Madicine ', desc: 'Internal medicine focuses on adult health, diagnosing and treating complex diseases, emphasizing preventive care and comprehensive management of chronic conditions.' },
+    { img: ' service/surgery.png', depart: 'General & Laparoscopic surgery ', desc: 'General and laparoscopic surgery involve diagnosing and treating conditions through minimally invasive techniques, enhancing recovery and reducing scarring compared to traditional surgery.' },
+    { img: ' service/pediatrics.png', depart: 'Pediatrics', desc: 'Pediatrics focuses on the health and development of infants, children, and adolescents, addressing their physical, emotional, and social well-being.' },
+    { img: ' service/orthopedics.png', depart: 'Orthopedics', desc: 'Orthopedics specializes in diagnosing, treating, and preventing musculoskeletal disorders, including bones, joints, ligaments, and muscles, to restore function and mobility.' },
+    { img: ' service/cardiology.png', depart: 'Cardiology', desc: 'Cardiology focuses on diagnosing and treating heart and vascular conditions, emphasizing prevention, management of diseases, and promoting overall cardiovascular health.' },
+    { img: ' service/radiology.png', depart: 'Radiology', desc: 'Radiology uses imaging techniques like X-rays, MRIs, and CT scans to diagnose and monitor diseases, guiding treatment decisions and patient care.' },
+    { img: ' service/neurology.png', depart: 'Neurology',desc:'Neurology focuses on diagnosing and treating disorders of the nervous system, including the brain, spinal cord, and peripheral nerves.' },
+    { img: ' service/default.png', depart: 'General Services', desc: 'This is the free service for all people.' },
+    { img: ' service/default.png', depart: 'General Services', desc: 'This is the free service for all people.' },
+    { img: ' service/default.png', depart: 'General Services', desc: 'This is the free service for all people.' },
+    { img: ' service/default.png', depart: 'General Services', desc: 'This is the free service for all people.' },
 
 ];
     return (
