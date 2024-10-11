@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import SwipeableTextMobileStepper from "../atom/carousel";
 import { Dialog, DialogContent, DialogDescription, DialogHeader } from "../atom/dailog";
 import { DialogTitle, Rating } from "@mui/material";
 import Ainput from "./input";
@@ -56,7 +55,6 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/* <div className="col-span-12 mt-2 lg:mt-0 "><SwipeableTextMobileStepper /></div> */}
                 <div className="lg:col-span-4 md:col-span-4 col-span-12 lg:mt-10 flex items-center justify-center">
                     <Image src="/man.jpeg" alt="" width={400} height={300} className="lg:-mt-10" />
                 </div>

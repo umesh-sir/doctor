@@ -57,7 +57,7 @@ export default function Services() {
                             alt={department.depart}
                             width={80}  // Adjust width as needed
                             height={80} // Adjust height as needed
-                        />
+                        ></Image>
                         <div className="text-xl font-semibold text-center">{department.depart}</div>
                         <div className="text-lg text-center mt-4">{department.desc}</div>
                     </div>

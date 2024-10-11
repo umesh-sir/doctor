@@ -1,12 +1,12 @@
 "use client";
 
-import SwipeableTextMobileStepper from "../atom/carousel";
 import Image from 'next/image';
 
 export default function Footer() {
     return (
         <>
             <div className="grid grid-cols-12 bg-slate-500 p-2">
+                
                 <div className="lg:col-span-3 md:col-span-3 col-span-6 text-white text-center p-2">
                     <div className="text-lg font-bold">Dr. Umesh Kumawat</div>
                     <div className="text-base font-serif">- for indian skin -</div>
