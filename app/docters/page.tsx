@@ -11,15 +11,41 @@ const doctorsData = [
     { id: 6, name: "Dr. Jane Doe", department: "Pediatrics", photo: "/drteam/dr6.jfif" },
     { id: 7, name: "Dr. Alice Brown", department: "Orthopedics", photo: "/drteam/dr3.jpg" },
     { id: 8, name: "Dr. Bob Johnson", department: "Emergency Services", photo: "/drteam/dr4.jfif" },
+
+    
+    
+
 ];
 
 export default function Doctors() {
+    const starCount = 100;
     return (
         <>
             <div className="p-2 grid grid-cols-12">
-                <div className="col-span-12 text-3xl font-bold flex justify-center items-center mt-16 h-20 bg-no-repeat bg-cover gap-2 bg-center animate-gradient">
-                    Doctors
-                </div>
+                
+        <div className="relative col-span-12 rounded-bl-full rounded-tr-full text-3xl font-bold flex lg:mt-[69px] justify-center items-center h-10  -mb-4 w-full bg-slate-400 overflow-hidden">
+            {Array.from({ length: starCount }).map((_, index) => (
+        <div
+          key={index}
+          className="absolute"
+          style={{
+            top: `${Math.random() * 100}vh`,
+            left: `${Math.random() * 100}vw`,
+            width: '5px',
+            height: '5px',
+            backgroundColor: 'white',
+            borderRadius: '50%',
+            animation: `blink 1.5s infinite ${Math.random() * 2}s`,
+          }}
+        />
+      ))}
+      <style jsx>{`
+        @keyframes blink {
+          0%, 100% { opacity: 0; }
+          50% { opacity: 1; }
+        }
+      `}</style>     Our Doctors Team
+       </div>
                 <div className="col-span-12 mt-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
                         {doctorsData.map(doctor => (

@@ -3,13 +3,38 @@
 import Image from "next/image";
 
 export default function About() {
+    const starCount = 100;
     return (
         <>
             <div className="p-2 grid grid-cols-12 gap-2">
-                <div className="col-span-12 text-3xl font-bold flex justify-center items-center mt-16 h-20 bg-no-repeat bg-cover gap-2 bg-center animate-gradient">
-                    About Us
-                </div>
-                
+            {/* <div className="h-20 col-span-12 w-full mt-[69px] font-bold bg-slate-400 text-2xl text-black flex items-center justify-center">
+    About
+</div> */}
+
+               
+         <div className="relative rounded-bl-full rounded-tr-full  col-span-12 text-3xl font-bold flex lg:mt-[69px] justify-center items-center h-10  w-full bg-slate-400 overflow-hidden"> 
+            {Array.from({ length: starCount }).map((_, index) => (
+        <div
+          key={index}
+          className="absolute"
+          style={{
+            top: `${Math.random() * 100}vh`,
+            left: `${Math.random() * 100}vw`,
+            width: '5px',
+            height: '5px',
+            backgroundColor: 'white',
+            borderRadius: '50%',
+            animation: `blink 1.5s infinite ${Math.random() * 2}s`,
+          }}
+        />
+      ))}
+      <style jsx>{`
+        @keyframes blink {
+          0%, 100% { opacity: 0; }
+          50% { opacity: 1; }
+        }
+      `}</style>     About Us
+    </div> 
                 {/* First Section */}
                 <div className="col-span-12 relative w-full flex items-center cursor-pointer">
                     <Image 
@@ -34,32 +59,9 @@ export default function About() {
                 </div>
 
                 {/* Second Section */}
-                <div className="col-span-12 relative w-full flex items-center cursor-pointer">
-                    <Image 
-                        src="/hero-img1.jpeg" // Ensure the path is correct
-                        alt="Your Health is Good"
-                        className="w-full lg:h-[450px] md:h-[450px] h-[250px]"
-                        width={500} // Set an appropriate width
-                        height={300} // Set an appropriate height
-                    />
-                    <div className="absolute lg:left-20">
-                        <h1 className="text-3xl">
-                            Your Health is Good <br />This is Our Aim <br />
-                        </h1>
-                        <p className="text-xl">
-                            Welcome to <span className="text-2xl font-bold">Ajay Hospital</span>, where your health and well-being are our top priorities. Established in 1992, we are dedicated to providing compassionate, high-quality medical care to our community.
-                        </p>
-                        <p className="text-xl hidden md:block">
-                            At <span className="text-2xl font-bold">Ajay Hospital</span>, our team of experienced healthcare professionals is committed to delivering comprehensive services across a wide range of specialties, including [list a few key specialties, e.g., cardiology, orthopedics, pediatrics]. We leverage the latest medical technology and evidence-based practices to ensure the best possible outcomes for our patients.
-                        </p>
-                        <p className="text-xl hidden md:block">
-                            Our mission is to enhance the health of our community through personalized care, advanced treatment options, and a commitment to excellence. We believe in treating each patient with dignity and respect, fostering a supportive environment for healing and recovery.
-                        </p>
-                        <p className="hidden md:block text-xl font-semibold">
-                            Thank you for trusting us with your healthcare needs. Together, we can achieve a healthier tomorrow.
-                        </p>
-                    </div>
-                </div>
+        {/* <div className="col-span-12">
+        
+        </div> */}
             </div>
         </>
     );

@@ -64,18 +64,38 @@ export default function Gallery() {
         setZoomLevel((prev) => Math.max(prev - 0.2, 1));
     };
 
+    const starCount = 100;
     return (
         <>
-            <div className="p-2 gap-4 grid grid-cols-12">
-                <div
-                    className={`col-span-12 text-3xl font-bold flex justify-center items-center mt-16 h-20 bg-no-repeat bg-cover gap-2 bg-center animate-gradient`}
-                >
-                    Gallery
-                </div>
+            <div className="p-2 gap-2 grid grid-cols-12">
+            <div className="relative col-span-12 text-3xl font-bold flex lg:mt-[69px] justify-center items-center h-10 rounded-bl-full rounded-tr-full  w-full bg-slate-400 overflow-hidden">
+            {Array.from({ length: starCount }).map((_, index) => (
+        <div
+          key={index}
+          className="absolute"
+          style={{
+            top: `${Math.random() * 100}vh`,
+            left: `${Math.random() * 100}vw`,
+            width: '5px',
+            height: '5px',
+            backgroundColor: 'white',
+            borderRadius: '50%',
+            animation: `blink 1.5s infinite ${Math.random() * 2}s`,
+          }}
+        />
+      ))}
+      <style jsx>{`
+        @keyframes blink {
+          0%, 100% { opacity: 0; }
+          50% { opacity: 1; }
+        }
+      `}</style>        Gallery
+    </div>
+               
                 {departments.map((department, index) => (
                     <div
                         key={index}
-                        className="lg:col-span-4 col-span-12 md:col-span-4 h-72 w-full rounded bg-blue-300 flex flex-col items-center transition-transform duration-300 ease-in-out hover:scale-y-105 cursor-pointer"
+                        className="lg:col-span-4 col-span-12 md:col-span-4 h-72 w-full rounded bg-blue-300 flex flex-col items-center transition-transform duration-300 ease-in-out hover:scale-y-95 cursor-pointer"
                         onClick={() => handleImageClick(department.img)}
                     >
                         <Image
@@ -103,25 +123,25 @@ export default function Gallery() {
                     <div className="absolute bottom-4 right-8 flex space-x-2">
                         <button 
                             onClick={downloadImage} 
-                            className="bg-blue-500 text-white px-3 py-2 rounded"
+                            className="bg-blue-500 text-white px-3 py-2 text-sm rounded"
                         >
                             Download
                         </button>
                         <button 
                             onClick={zoomIn} 
-                            className="bg-green-500 text-white px-3 py-2 rounded"
+                            className="bg-green-500 text-white px-3 py-2 text-sm rounded"
                         >
                             Zoom In
                         </button>
                         <button 
                             onClick={zoomOut} 
-                            className="bg-yellow-500 text-white px-3 py-2 rounded"
+                            className="bg-yellow-500 text-white px-3 py-2 text-sm rounded"
                         >
                             Zoom Out
                         </button>
                         <button 
                             onClick={closeImage} 
-                            className="bg-red-500 text-white px-3 py-2 rounded"
+                            className="bg-red-500 text-white px-3 py-2 text-sm rounded"
                         >
                             Close
                         </button>

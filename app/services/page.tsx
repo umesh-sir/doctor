@@ -18,19 +18,38 @@ export default function Services() {
         { img: '/service/default.png', depart: 'General Services', desc: 'This is the free service for all people.' },
     ];
 
+    const starCount = 100;
     return (
         <>
             <div className="p-2 grid grid-cols-12 gap-4">
-                <div className="col-span-12 flex flex-col justify-center items-center mt-16 lg:h-40 h-96 bg-no-repeat bg-cover gap-2 bg-center animate-gradient">
-                    <div className="text-3xl font-bold">Services</div>
-                    <div className="text-lg p-4">
-                        At Manavata Hospital, we offer a comprehensive range of medical services to meet the needs of our patients. Our dedicated team of healthcare professionals is committed to providing the highest quality care. We utilize the latest medical technology and evidence-based practices to ensure the best outcomes for our patients. Our services include:
-                    </div>
-                </div>
+                
+                <div className="relative col-span-12 text-3xl font-bold flex lg:mt-[69px] justify-center items-center h-10 rounded-bl-full rounded-tr-full -mb-2 w-full bg-slate-400 overflow-hidden">
+            {Array.from({ length: starCount }).map((_, index) => (
+        <div
+          key={index}
+          className="absolute"
+          style={{
+            top: `${Math.random() * 100}vh`,
+            left: `${Math.random() * 100}vw`,
+            width: '5px',
+            height: '5px',
+            backgroundColor: 'white',
+            borderRadius: '50%',
+            animation: `blink 1.5s infinite ${Math.random() * 2}s`,
+          }}
+        />
+      ))}
+      <style jsx>{`
+        @keyframes blink {
+          0%, 100% { opacity: 0; }
+          50% { opacity: 1; }
+        }
+      `}</style>     Services
+    </div>
                 {departments.map((department, index) => (
                     <div
                         key={index}
-                        className="lg:col-span-4 col-span-12 md:col-span-4 h-72 w-full rounded bg-blue-300 flex flex-col items-center transition-transform duration-300 ease-in-out hover:scale-y-105"
+                        className="lg:col-span-4 col-span-12 md:col-span-4 h-72 w-full rounded bg-slate-200 flex flex-col items-center transition-transform duration-300 ease-in-out hover:scale-y-105"
                     >
                         <Image
                             className="rounded-full h-20 w-20 mb-2"
