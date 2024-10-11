@@ -41,7 +41,6 @@ export default function Home() {
                         </p>
                         <p className="mt-4 para_2 leading-6">
                             Standard dummy text since when an unknown printer took a galley MediPoint Lorem ipsum dolor sit amet, consetetur sadipscing elitr. At accusam aliquyam&apos;s standard dummy text since when an unknown printer took a galley consetetur.
-                            <Image src="/assets/images.png" alt="" width={112} height={112} className="h-[7rem]" />
                         </p>
                     </div>
 
