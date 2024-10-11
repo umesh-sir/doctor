@@ -1,8 +1,6 @@
-import About from "./atom/about";
-import Feedback from "./atom/feedback";
-import Home from "./atom/home"
-;
-import Home1 from "./atom/home1";
+ 
+import Home from "./atom/home";
+ 
 
 
 export default function page() {

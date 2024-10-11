@@ -1,36 +1,32 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import About from "../atom/about";
 import SwipeableTextMobileStepper from "../atom/carousel";
-import Feedback from "../atom/feedback";
 import { Dialog, DialogContent, DialogDescription, DialogHeader } from "../atom/dailog";
 import { DialogTitle, Rating } from "@mui/material";
-import Apponitment from "./appointment";
 import Ainput from "./input";
-import Image from "next/image"; // Import the Image component
+import Image from "next/image";
+import Marquee from './Marquee';
 
 export default function Home() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [isDialogOpen1, setIsDialogOpen1] = useState(false);
-    const [value, setValue] = useState(0); // State for the rating
+    const [value, setValue] = useState(0);
 
-    const giverating = async (row) => {
+    const giverating = async (row:any) => {
         setIsDialogOpen1(true);
     };
 
-    const takeappointment = async (row) => {
+    const takeappointment = async (row:any) => {
         setIsDialogOpen(true);
     };
 
     return (
         <>
-            <div className="p-2 relative grid grid-cols-12 ">
-                <div className="col-span-12">
-                    <marquee className="capitalize font-bold lg:mt-[70px] mt-16 text-lg text-xl bg-blue-300">
-                        Ajay Multy Hospital near SK Hospital Station Road Sikar, services provided 24/7
-                    </marquee>
-                </div>
+            <div className="p-2 relative grid grid-cols-12">
+            <div className="col-span-12">
+          <Marquee text="Ajay Multy Hospital near SK Hospital Station Road Sikar, services provided 24/7" />
+        </div>
                 <div className="col-span-12"><SwipeableTextMobileStepper /></div>
                 <div className="flex flex-wrap col-span-12 justify-center items-start w-full my-16 contain_1">
                     <div className="w-[25rem] h-auto img_box">
@@ -44,7 +40,7 @@ export default function Home() {
                             Hospital imply dummy text of the printing and typesetting industry been the industry.
                         </p>
                         <p className="mt-4 para_2 leading-6">
-                            Standard dummy text since when an unknown printer took a galley MediPoint Lorem ipsum dolor sit amet, consetetur sadipscing elitr. At accusam aliquyam's standard dummy text since when an unknown printer took a galley consetetur.
+                            Standard dummy text since when an unknown printer took a galley MediPoint Lorem ipsum dolor sit amet, consetetur sadipscing elitr. At accusam aliquyam&apos;s standard dummy text since when an unknown printer took a galley consetetur.
                             <Image src="/assets/images.png" alt="" width={112} height={112} className="h-[7rem]" />
                         </p>
                     </div>
@@ -113,7 +109,13 @@ export default function Home() {
                                     <Ainput title='Feedback'></Ainput>
                                 </div>
                                 <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                                    <Rating name="rating" value={value} onChange={(event, newValue) => setValue(newValue)} />
+                                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+  <Rating 
+    name="rating" 
+    value={value} 
+    onChange={(event, newValue) => setValue(newValue ?? 0)} 
+  />
+</div>
                                 </div>
                                 <div className='col-span-12 text-center mt-6'>
                                     <button className='hover:cursor-pointer bg-green-500 text-xl px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-blue-600'>Submit</button>

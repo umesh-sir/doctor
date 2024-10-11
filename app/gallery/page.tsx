@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from 'next/image';
 
 export default function Gallery() {
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [zoomLevel, setZoomLevel] = useState(1);
 
     const departments = [
@@ -36,7 +36,7 @@ export default function Gallery() {
         return () => clearInterval(interval);
     }, []);
 
-    const handleImageClick = (img) => {
+    const handleImageClick = (img: string) => { // Explicitly typing the parameter
         setSelectedImage(img);
     };
 
@@ -46,12 +46,14 @@ export default function Gallery() {
     };
 
     const downloadImage = () => {
-        const link = document.createElement('a');
-        link.href = selectedImage;
-        link.download = selectedImage.split('/').pop();
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        if (selectedImage) {
+            const link = document.createElement('a');
+            link.href = selectedImage;
+            link.download = selectedImage.split('/').pop() || 'download';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     };
 
     const zoomIn = () => {

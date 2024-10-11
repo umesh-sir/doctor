@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Apponitment from "../atom/appointment";
 
 export default function About() {
     return (
