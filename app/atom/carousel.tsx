@@ -15,30 +15,35 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const images = [
   {
-    label: 'San Francisco – Oakland Bay Bridge, United States',
+    label: 'hospital image',
     imgPath:
-      'crosole/pic1.jpg',
+      'crosole/c1.jpg',
   },
   {
-    label: 'Bird',
+    label: 'hospital image',
     imgPath:
-      'crosole/hero-img1.jpeg',
+    'crosole/c2.jpg',
   },
   {
-    label: 'Bali, Indonesia',
+    label: 'hospital image',
     imgPath:
-      'crosole/pic2.avif',
+      'crosole/c3.jpg',
   },
   {
-    label: 'Goč, Serbia',
+    label: 'hospital image',
     imgPath:
-      'crosole/pic3.jpg',
+    'crosole/c4.jpg',
   },
   {
-    label: 'Goč, Serbia',
+    label: 'hospital image',
     imgPath:
-      'crosole/pic4.jfif',
+    'crosole/c5.jpg',
   },
+  {
+    label: 'hospital image',
+    imgPath:
+    'crosole/c6.jpg',
+  }
 ];
 
 function SwipeableTextMobileStepper() {

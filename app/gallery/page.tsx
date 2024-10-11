@@ -1,75 +1,102 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Image from 'next/image';
 
 export default function Gallery() {
     const [selectedImage, setSelectedImage] = useState(null);
-    const [zoomLevel, setZoomLevel] = useState(1); // Keep track of zoom level
+    const [zoomLevel, setZoomLevel] = useState(1);
 
     const departments = [
-        { img: 'dr.jpeg' },
-        { img: 'logo.png' },
-        { img: 'service/surgery.png' },
-        { img: 'service/pediatrics.png' },
-        { img: 'service/orthopedics.png' },
-        { img: 'service/cardiology.png' },
-        { img: 'service/radiology.png' },
-        { img: 'service/neurology.png' },
-        { img: 'service/default.png' }
+        { img: '/gellary/g1.jpg' },
+        { img: '/gellary/g2.jpg' },
+        { img: '/gellary/g3.jpg' },
+        { img: '/gellary/g4.jpg' },
+        { img: '/gellary/g5.jpg' },
+        { img: '/gellary/g6.jpg' },
+        { img: '/gellary/g7.jpg' },
+        { img: '/gellary/g8.jpg' },
+        { img: '/gellary/g9.jpg' },
+        { img: '/gellary/g10.jpg' },
+        { img: '/gellary/g1.jpg' },
+        { img: '/gellary/g2.jpg' },
     ];
 
+    const [bgColor, setBgColor] = useState("bg-blue-400");
+
+    useEffect(() => {
+        const colors = ["bg-blue-400", "bg-blue-300", "bg-blue-200", "bg-blue-100"];
+        let index = 0;
+
+        const interval = setInterval(() => {
+            index = (index + 1) % colors.length;
+            setBgColor(colors[index]);
+        }, 2000);
+
+        return () => clearInterval(interval);
+    }, []);
+
     const handleImageClick = (img) => {
-        setSelectedImage(img); // Open the image directly on click
+        setSelectedImage(img);
     };
 
     const closeImage = () => {
-        setSelectedImage(null); // Close the image
-        setZoomLevel(1); // Reset zoom level
+        setSelectedImage(null);
+        setZoomLevel(1);
     };
 
     const downloadImage = () => {
         const link = document.createElement('a');
         link.href = selectedImage;
-        link.download = selectedImage.split('/').pop(); // Get the image name
+        link.download = selectedImage.split('/').pop();
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
     };
 
     const zoomIn = () => {
-        setZoomLevel((prev) => prev + 0.2); // Increase zoom level
+        setZoomLevel((prev) => prev + 0.2);
     };
 
     const zoomOut = () => {
-        setZoomLevel((prev) => Math.max(prev - 0.2, 1)); // Decrease zoom level, minimum 1
+        setZoomLevel((prev) => Math.max(prev - 0.2, 1));
     };
 
     return (
         <>
             <div className="p-2 gap-4 grid grid-cols-12">
-                <div className="col-span-12 text-3xl font-bold flex justify-center items-center mt-16 h-40 bg-[url('/dr.jpeg')] bg-no-repeat bg-cover gap-2 bg-center">
+                <div
+                    className={`col-span-12 text-3xl font-bold flex justify-center items-center mt-16 h-20 bg-no-repeat bg-cover gap-2 bg-center animate-gradient`}
+                >
                     Gallery
                 </div>
                 {departments.map((department, index) => (
                     <div
                         key={index}
                         className="lg:col-span-4 col-span-12 md:col-span-4 h-72 w-full rounded bg-blue-300 flex flex-col items-center transition-transform duration-300 ease-in-out hover:scale-y-105 cursor-pointer"
-                        onClick={() => handleImageClick(department.img)} // Open image immediately on click
+                        onClick={() => handleImageClick(department.img)}
                     >
-                        <img className="h-full w-full object-cover rounded" src={department.img} alt="" />
+                        <Image
+                            className="h-full w-full object-cover rounded"
+                            src={department.img}
+                            alt={`Gallery image ${index + 1}`} // Provide a meaningful alt text
+                            width={500} // Set an appropriate width
+                            height={300} // Set an appropriate height
+                        />
                     </div>
                 ))}
             </div>
 
-            {/* Full-screen image overlay */}
             {selectedImage && (
                 <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-                    <img 
-                        src={selectedImage} 
-                        alt="Selected" 
-                        className={`cursor-pointer`} 
+                    <Image
+                        src={selectedImage}
+                        alt="Selected"
+                        className={`cursor-pointer`}
                         onClick={closeImage}
-                        style={{ transform: `scale(${zoomLevel})` }} // Apply zoom level
+                        style={{ transform: `scale(${zoomLevel})` }}
+                        width={800} // Set an appropriate width for the full-size image
+                        height={600} // Set an appropriate height for the full-size image
                     />
                     <div className="absolute bottom-4 right-8 flex space-x-2">
                         <button 
