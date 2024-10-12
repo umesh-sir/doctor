@@ -6,6 +6,16 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader } from "../atom/
 import { DialogTitle } from "@mui/material";
 import Ainput from './input';
 import Image from 'next/image';
+import { IoMdLogIn } from "react-icons/io";
+import { CgProfile } from "react-icons/cg";
+import { AiOutlineHome } from "react-icons/ai";
+import { MdMiscellaneousServices } from "react-icons/md";
+import { RiTeamLine } from "react-icons/ri";
+import { RiGalleryLine } from "react-icons/ri";
+import { RiLogoutCircleLine } from "react-icons/ri";
+import { PiPhoneCall } from "react-icons/pi";
+import { CiBellOn } from "react-icons/ci";
+import { FiAirplay } from "react-icons/fi";
 
 const Header = () => {
   const router = useRouter();
@@ -42,7 +52,7 @@ const Header = () => {
       <div className="grid rounded-lg  lg:fixed relative md:fixed shadow-sm z-10 bg-slate-500 lg:h-[70px] h-16 w-full grid-cols-12">
         <div className="col-span-3 flex ">
           <Image className="p-2 align-middle lg:h-[70px] h-16 w-28" src="/logo.png" alt="Logo" width={112} height={64} />
-        <div className='mt-1 lg:ml-20'> <button className="btn-88 mt-2">
+        <div className='mt-3 lg:ml-20'> <button className=" btn-88 h-10 w-10 ">
   <svg viewBox="0 0 597.975 597.975">
     <path
       d="M325.125,26.138c-33.15,0-65.025,6.375-95.625,17.85c0,1.275,0,1.275,0,2.55v52.275
@@ -73,16 +83,12 @@ const Header = () => {
            </button></div>
         </div>
         <ul className="lg:flex  md:hidden hidden font-bold capitalize items-center justify-between col-span-7">
-          
-          <li className="hover:cursor-pointer  rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/')}>home</li>
-          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/about')}>about us</li>
-          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/services')}>services</li>
-          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/docters')}>doctor team</li>
-          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/gallery')}>gallery</li>
-        
-
-          <li className="hover:cursor-pointer text-base font-bold bg-green-500 px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-orange-600 lg:text-xl md:text-lg" onClick={() => setIsDialogOpen(true)}>appointment</li>
-      
+          <li className="hover:cursor-pointer  rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/')}>home</li>
+          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/about')}>about us</li>
+          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/services')}>services</li>
+          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/docters')}>doctor team</li>
+          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/gallery')}>gallery</li>
+          <li className="hover:cursor-pointer text-base font-serif font-bold bg-green-500 px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-orange-600 lg:text-xl md:text-lg" onClick={() => setIsDialogOpen(true)}>appointment</li>
         </ul>
 
         <div className="col-span-7 capitalize text-2xl font-bold flex items-center lg:hidden justify-center">
@@ -105,12 +111,18 @@ const Header = () => {
    
         {drop && (
           <div ref={dropdownRef}> {/* Attach the ref to the dropdown */}
-            <ul className="font-bold capitalize rounded mt-1 mr-1 bg-slate-200  w-96 h-screen absolute top-[70px] right-2">
-              <li className="hover:cursor-pointer py-2 text-center rounded bg-blue-400 hover:underline border" onClick={() => handleNavigation('/')}>home</li>
-              <li className="hover:cursor-pointer py-2 text-center rounded bg-blue-400 hover:underline border" onClick={() => handleNavigation('/about')}>about us</li>
-              <li className="hover:cursor-pointer py-2 text-center rounded bg-blue-400 hover:underline border" onClick={() => handleNavigation('/services')}>services</li>
-              <li className="hover:cursor-pointer py-2 text-center rounded bg-blue-400 hover:underline border" onClick={() => handleNavigation('/docters')}>doctor team</li>
-              <li className="hover:cursor-pointer py-2 text-center rounded bg-blue-400 hover:underline border" onClick={() => handleNavigation('/gallery')}>gallery</li>
+            <ul className="font-bold capitalize rounded    bg-slate-200  lg:w-96 w-80 h-screen absolute top-[70px] right-2">
+            <li className="hover:cursor-pointer py-2 flex pl-5 rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><CgProfile className='-mt-1 pr-2 w-8 h-8' /><span className=' text-lg font-bold font-serif'>Your Profile</span></li>
+            <li className="hover:cursor-pointer flex py-2 pl-5 rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><IoMdLogIn className='-mt-1 pr-2 w-8 h-8'  /><span className=' text-lg font-bold font-serif'>Login</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><AiOutlineHome className='-mt-1 pr-2 w-8 h-8'  /><span  className=' text-lg font-bold font-serif'>Home</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/about')}><FiAirplay className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>About us</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/services')}><MdMiscellaneousServices  className='-mt-1 pr-2 w-8 h-8' /><span  className=' text-lg font-bold font-serif'>Services</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/docters')}><RiTeamLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Doctor team</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/gallery')}><RiGalleryLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Gallery</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><PiPhoneCall className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Contect us</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><CiBellOn className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Notifications</span></li>
+
+              <li className="hover:cursor-pointer   py-2 pl-5 flex  rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><RiLogoutCircleLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Logout</span></li>
             </ul>
           </div>
         )}
