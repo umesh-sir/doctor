@@ -14,6 +14,7 @@ import Gallery from "../gallery/page";
 export default function Home() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [isDialogOpen1, setIsDialogOpen1] = useState(false);
+    const [isDialogOpen2, setIsDialogOpen2] = useState(false);
     const [value, setValue] = useState(0);
 
     const giverating = async (row: any) => {
@@ -24,15 +25,22 @@ export default function Home() {
         setIsDialogOpen(true);
     };
 
+    const contectus = async (row: any) => {
+        setIsDialogOpen2(true);
+    };
+
     return (
         <>
             <div className="p-2 relative grid grid-cols-12">
-                <div className="col-span-12  lg:mt-16  mt-2">
+                <div className="col-span-12  lg:mt-16 -mt-2">
                     <div className="overflow-hidden whitespace-nowrap">
                         <div className="inline-block text-2xl font-bold animate-marquee">
                             Ajay Multy Hospital near SK Hospital Station Road Sikar, services provided 24/7</div>
                     </div>
+                   
+
                 </div>
+  
                 <div className="col-span-12 relative w-full flex items-center cursor-pointer">
                     <Image 
                         src="/hero-img1.jpeg" // Ensure the path is correct
@@ -41,11 +49,11 @@ export default function Home() {
                         width={500} // Set an appropriate width
                         height={300} // Set an appropriate height
                     />
-                    <div className="absolute lg:left-20">
-                        <h1 className="text-3xl">
+                    <div className="absolute lg:left-20 md:left-16 left-8">
+                        <h1 className="lg:text-3xl md:text-3xl text-xl">
                             We Take Care Of Your <br />Healthy Health <br />
                         </h1>
-                        <p className="text-xl">
+                        <p className="lg:text-xl md:text-xl :text-base">
                             Simply dummy text of the printing typesetting ipsum dotor
                             <br />onsecte diplscing
                         </p>
@@ -75,9 +83,9 @@ export default function Home() {
                     <button className="btn-22 mb-2 min-w-72" onClick={giverating}><span>Give Us Rating</span></button>
                     <button className="btn-22 mb-2 min-w-72" onClick={takeappointment}><span> appointment</span></button>
                     <button className="btn-22 mb-2 min-w-72"><span>Location</span></button>
-                    <button className="btn-22 min-w-72"><span>Contect us</span></button>
+                    <button className="btn-22 min-w-72" onClick={contectus}><span>Contect us</span></button>
                 </div>
-                <div className="col-span-12 lg:-mt-[69px]"><About></About></div>
+                {/* <div className="col-span-12 lg:-mt-[69px]"><About></About></div> */}
                 <div className="col-span-12 lg:-mt-[69px]"><Services></Services></div>
                 <div className="col-span-12 lg:-mt-[69px]"><Doctors></Doctors></div>
                 <div className="col-span-12 lg:-mt-[69px]"><Gallery></Gallery></div>
@@ -165,6 +173,38 @@ export default function Home() {
                                     <Ainput title='Doctor'></Ainput>
                                 </div>
                                 <div className='col-span-12 md:col-span-6 lg:col-span-6 mt-6'>
+                                    <button className='hover:cursor-pointer bg-green-500 text-xl px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-blue-600'>Submit</button>
+                                </div>
+                            </div>
+                        </DialogDescription>
+                    </DialogHeader>
+                </DialogContent>
+            </Dialog>
+
+            
+            <Dialog open={isDialogOpen2} onOpenChange={setIsDialogOpen2}>
+                <DialogContent className="w-full max-w-screen-md xs:h-auto overflow-hidden">
+                    <DialogHeader>
+                        <DialogTitle>Please Fill your Valueable Words</DialogTitle>
+                        <hr className="bg-body-color mx-2" />
+                        <DialogDescription>
+                            <div className="grid grid-cols-12 gap-2">
+                                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+                                    <Ainput title='Name'></Ainput>
+                                </div>
+                                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+                                    <Ainput title='Mobile No.'></Ainput>
+                                </div>
+                                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+                                    <Ainput title='Date'></Ainput>
+                                </div>
+                                {/* <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+                                    <Ainput title='Department'></Ainput>
+                                </div> */}
+                                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+                                    <Ainput title='Reason'></Ainput>
+                                </div>
+                                <div className='col-span-12  flex justify-center mt-6'>
                                     <button className='hover:cursor-pointer bg-green-500 text-xl px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-blue-600'>Submit</button>
                                 </div>
                             </div>

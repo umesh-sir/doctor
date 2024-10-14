@@ -23,7 +23,7 @@ export default function Services() {
         <>
             <div className="p-2 grid grid-cols-12 gap-4">
                 
-                <div className="relative col-span-12 text-3xl font-bold flex lg:mt-[69px] justify-center items-center h-10 rounded-bl-full rounded-tr-full -mb-2 w-full bg-slate-400 overflow-hidden">
+                {/* <div className="relative col-span-12 text-3xl font-bold flex lg:mt-[69px] justify-center items-center h-10 rounded-bl-full rounded-tr-full -mb-2 w-full bg-slate-400 overflow-hidden">
             {Array.from({ length: starCount }).map((_, index) => (
         <div
           key={index}
@@ -45,6 +45,9 @@ export default function Services() {
           50% { opacity: 1; }
         }
       `}</style>     Services
+    </div> */}
+    <div className=" flex justify-center text-3xl font-bold col-span-12 mt-[69px]">
+   -- Services --
     </div>
                 {departments.map((department, index) => (
                     <div

@@ -142,7 +142,7 @@ transparent;
 .btn-22:before {
   aspect-ratio: 1;
   background: 
-#ea0b34e5;
+#c4c4debc;
   border-radius: 50%;
   content: "";
   left: -100%;
@@ -234,3 +234,36 @@ transparent;
   transform: scale(4);
 }
 
+ 
+
+#btn-button118 {
+  --bg-color: 
+#191f36;
+  --snd-bg-color: 
+#262b40;
+  --text-color: 
+#fff;
+  --mian-color: 
+#59b2f4;
+}
+
+#btn-button118.btn {
+  display: inline-block;
+  padding: .2rem 2.8rem;
+  background: var(--mian-color);
+  border-radius: .5rem;
+  box-shadow: 0 0 1rem var(--mian-color);
+  font-size: 1.6rem;
+  color: var(--bg-color);
+  letter-spacing: 0.1rem;
+  font-weight: 600;
+  transition: 0.5s ease;
+}
+
+#btn-button118.btn:hover {
+  box-shadow: none;
+}
+
+#btn-button118 span {
+  color: var(--text-color);
+}

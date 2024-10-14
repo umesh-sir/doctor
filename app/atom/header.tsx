@@ -102,18 +102,16 @@ const Header = () => {
           />
         </div>
         
-        <div className='col-span-12 lg:hidden mt-2 mr-1 flex justify-end'>
+        {/* <div className='col-span-12 lg:hidden mt-2 mr-1 flex justify-end'>
           <button className='hover:cursor-pointer bg-green-500 font-bold px-2 py-2 rounded-tl-xl rounded-br-xl hover:bg-blue-600' onClick={() => setIsDialogOpen(true)}>Appointment</button>
-        </div>
-        <div className='col-span-12 lg:hidden mt-2 mr-1 flex justify-end'>
+        </div> */}
       
-        </div>
    
         {drop && (
           <div ref={dropdownRef}> {/* Attach the ref to the dropdown */}
             <ul className="font-bold capitalize rounded    bg-slate-200  lg:w-96 w-80 h-screen absolute top-[70px] right-2">
             <li className="hover:cursor-pointer py-2 flex pl-5 rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><CgProfile className='-mt-1 pr-2 w-8 h-8' /><span className=' text-lg font-bold font-serif'>Your Profile</span></li>
-            <li className="hover:cursor-pointer flex py-2 pl-5 rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><IoMdLogIn className='-mt-1 pr-2 w-8 h-8'  /><span className=' text-lg font-bold font-serif'>Login</span></li>
+            <li className="hover:cursor-pointer flex py-2 pl-5 rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/login')}><IoMdLogIn className='-mt-1 pr-2 w-8 h-8'  /><span className=' text-lg font-bold font-serif'>Login</span></li>
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><AiOutlineHome className='-mt-1 pr-2 w-8 h-8'  /><span  className=' text-lg font-bold font-serif'>Home</span></li>
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/about')}><FiAirplay className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>About us</span></li>
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/services')}><MdMiscellaneousServices  className='-mt-1 pr-2 w-8 h-8' /><span  className=' text-lg font-bold font-serif'>Services</span></li>

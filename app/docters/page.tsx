@@ -23,7 +23,7 @@ export default function Doctors() {
         <>
             <div className="p-2 grid grid-cols-12">
                 
-        <div className="relative col-span-12 rounded-bl-full rounded-tr-full text-3xl font-bold flex lg:mt-[69px] justify-center items-center h-10  -mb-4 w-full bg-slate-400 overflow-hidden">
+        {/* <div className="relative col-span-12 rounded-bl-full rounded-tr-full text-3xl font-bold flex lg:mt-[69px] justify-center items-center h-10  -mb-4 w-full bg-slate-400 overflow-hidden">
             {Array.from({ length: starCount }).map((_, index) => (
         <div
           key={index}
@@ -45,7 +45,10 @@ export default function Doctors() {
           50% { opacity: 1; }
         }
       `}</style>     Our Doctors Team
-       </div>
+       </div> */}
+       <div className=" flex justify-center text-3xl font-bold col-span-12 mt-[69px]">
+   -- Our Doctors Team --
+    </div>
                 <div className="col-span-12 mt-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
                         {doctorsData.map(doctor => (
