@@ -3,9 +3,32 @@
 import Link from "next/link";
 import Ainput from "../atom/input";
 import { useState } from "react";
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
+    const router = useRouter();
     const [signup, setSignup] = useState(false);
+    const [formData, setFormData] = useState({
+        name: '',
+        mobile: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+    });
+
+    const handleInputChange = (name:any, value:any) => {
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    const loginfunction = () => {
+        console.log('Form data:', formData);
+        if(formData.email=='umesh@gmail.com' && formData.password=='umesh'){
+            router.push(`/hospital`)
+        }
+    };
 
     return (
         <div className="relative h-screen bg-cover bg-center" style={{ backgroundImage: 'url(/hero-img1.jpeg)' }}>
@@ -17,22 +40,52 @@ export default function Login() {
                     {signup && (
                         <>
                             <div className="col-span-12 w-[300px] lg:w-[400px] md:w-[350px]">
-                                <Ainput title="Name" />
+                                <Ainput
+                                    title="Name"
+                                    value={formData.name}
+                                    name="name"
+                                    type="text"
+                                    handleInputChange={handleInputChange}
+                                />
                             </div>
                             <div className="col-span-12 w-[300px] lg:w-[400px] md:w-[350px]">
-                                <Ainput title="Phone" />
+                                <Ainput
+                                    title="mobile"
+                                    type="number"
+                                    value={formData.mobile}
+                                    name="mobile"
+                                    handleInputChange={handleInputChange}
+                                />
                             </div>
                         </>
                     )}
                     <div className="col-span-12 w-[300px] lg:w-[400px] md:w-[350px]">
-                        <Ainput title="Email" />
+                        <Ainput
+                            title="Email"
+                            type="email"
+                            value={formData.email}
+                            name="email"
+                            handleInputChange={handleInputChange}
+                        />
                     </div>
                     <div className="col-span-12 w-[300px] lg:w-[400px] md:w-[350px]">
-                        <Ainput title="Password" type="password" />
+                        <Ainput
+                            title="Password"
+                            type="password"
+                            name="password"
+                            value={formData.password}
+                            handleInputChange={handleInputChange}
+                        />
                     </div>
                     {signup && (
                         <div className="col-span-12 w-[300px] lg:w-[400px] md:w-[350px]">
-                            <Ainput title="Confirm Password" type="password" />
+                            <Ainput
+                                title="Confirm Password"
+                                type="password"
+                                name="confirmPassword"
+                                value={formData.confirmPassword}
+                                handleInputChange={handleInputChange}
+                            />
                         </div>
                     )}
                     {!signup && (
@@ -42,7 +95,7 @@ export default function Login() {
                     )}
                     {!signup && (
                         <div className="col-span-12 mt-4 mb-4 w-[300px] lg:w-[400px] md:w-[350px] flex justify-center">
-                            <button id="btn-button118" className="btn w-[300px] lg:w-[400px] md:w-[350px]">Login</button>
+                            <button onClick={loginfunction} id="btn-button118" className="btn w-[300px] lg:w-[400px] md:w-[350px]">Login</button>
                         </div>
                     )}
                     {signup && (

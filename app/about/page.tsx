@@ -1,13 +1,30 @@
 "use client";
 
+import axios from "axios";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function About() {
     const starCount = 100;
+    const [records, setRecords] = useState([]);
+
+    const fetchRecords = async () => {
+       
+        try {
+            const response = await axios.post('http://localhost:8000/api/records'); 
+            console.log(response,"responseresponseresponse")
+            // setRecords(response.data);
+        } catch (err) {
+            console.error(err);
+        } 
+    };
+
+
+
     return (
         <>
             <div className="p-2 grid grid-cols-12 gap-2">
-  
+  <button className="mt-20" onClick={fetchRecords}>check</button>
 
                
          {/* <div className="relative rounded-bl-full rounded-tr-full  col-span-12 text-3xl font-bold flex lg:mt-[69px] justify-center items-center h-10  w-full bg-slate-400 overflow-hidden"> 

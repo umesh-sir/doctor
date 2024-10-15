@@ -53,7 +53,7 @@ const Ainput: FC<AinputProps> = ({
     <div className="relative w-full">
       <label className="flex capitalize text-base ml-2 font-bold mt-1" htmlFor={name}>
         {title?.toLowerCase()}
-        {redlabel && <p className="text-exit text-xs -mt-[3px] ml-2">{redlabel}</p>}
+        {redlabel && <p className="text-exit text-base text-red-400 -mt-[2px] ml-2">{redlabel}</p>}
         {errorMessage && <p className="text-exit text-xs ml-2">{errorMessage}</p>}
       </label>
 

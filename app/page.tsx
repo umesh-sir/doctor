@@ -1,12 +1,9 @@
- 
 import Home from "./atom/home";
- 
 
-
-export default function page() {
+export default function Page() {
   return (
- <>
- <Home></Home>
- </>
+    <>
+      <Home />
+    </>
   );
 }

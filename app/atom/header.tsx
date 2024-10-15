@@ -16,6 +16,8 @@ import { RiLogoutCircleLine } from "react-icons/ri";
 import { PiPhoneCall } from "react-icons/pi";
 import { CiBellOn } from "react-icons/ci";
 import { FiAirplay } from "react-icons/fi";
+import axios from 'axios';
+import Popup from './popup';
 
 const Header = () => {
   const router = useRouter();
@@ -29,7 +31,8 @@ const Header = () => {
     department: '',
     doctor: '',
   });
-
+  const [message, setMessage] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
   const dropdownRef = useRef(null); // Create a ref for the dropdown
 
   const handleInputChange = (name:string, value:string) => {
@@ -44,6 +47,24 @@ const Header = () => {
     setDrop(false);
   };
 
+
+  const saveaponitment = async () => {
+    setIsDialogOpen(false)
+    try {
+        const response = await axios.post('http://localhost:8000/cash_sheet/saveappoint',formData); 
+        console.log(response,"responseresponseresponse")
+        setMessage('Your data for appointment saved successfully');
+        setShowPopup(true);
+    } catch (err) {
+        console.error(err);
+        setMessage('Error saving data.');
+        setShowPopup(true);
+    } 
+};
+
+const handleClosePopup = () => {
+  setShowPopup(false);
+};
 
 
   return (
@@ -119,13 +140,12 @@ const Header = () => {
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/gallery')}><RiGalleryLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Gallery</span></li>
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><PiPhoneCall className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Contect us</span></li>
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><CiBellOn className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Notifications</span></li>
-
               <li className="hover:cursor-pointer   py-2 pl-5 flex  rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><RiLogoutCircleLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Logout</span></li>
             </ul>
           </div>
         )}
       </div>
-
+      {showPopup && <Popup message={message} onClose={handleClosePopup} />}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="w-full max-w-screen-md xs:h-auto overflow-hidden">
           <DialogHeader>
@@ -140,7 +160,7 @@ const Header = () => {
                     name='name' 
                     value={formData.name} 
                     handleInputChange={handleInputChange} 
-                    redlabel='Name is required' 
+                    redlabel='*' 
                   />
                 </div>
                 <div className='col-span-12 md:col-span-6 lg:col-span-6'>
@@ -150,7 +170,7 @@ const Header = () => {
                     name='mobile' 
                     value={formData.mobile} 
                     handleInputChange={handleInputChange} 
-                    redlabel='Mobile number is required' 
+                    redlabel='*' 
                   />
                 </div>
                 <div className='col-span-12 md:col-span-6 lg:col-span-6'>
@@ -160,7 +180,7 @@ const Header = () => {
                     name='date' 
                     value={formData.date} 
                     handleInputChange={handleInputChange} 
-                    redlabel='Date is required' 
+                    redlabel='*' 
                   />
                 </div>
                 <div className='col-span-12 md:col-span-6 lg:col-span-6'>
@@ -170,7 +190,7 @@ const Header = () => {
                     name='department' 
                     value={formData.department} 
                     handleInputChange={handleInputChange} 
-                    redlabel='Department is required' 
+                    redlabel='*' 
                   />
                 </div>
                 <div className='col-span-12 md:col-span-6 lg:col-span-6'>
@@ -180,11 +200,11 @@ const Header = () => {
                     name='doctor' 
                     value={formData.doctor} 
                     handleInputChange={handleInputChange} 
-                    redlabel='Doctor is required' 
+                    redlabel='*' 
                   />
                 </div>
                 <div className='col-span-12 md:col-span-6  flex justify-center lg:col-span-6 mt-6'>
-                  <button className='hover:cursor-pointer bg-green-500 text-xl px-2 py-1 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-blue-600'>submit</button>
+                  <button onClick={saveaponitment} className='hover:cursor-pointer bg-green-500 text-xl px-2 py-1 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-blue-600'>submit</button>
                 </div>
               </div>
             </DialogDescription>

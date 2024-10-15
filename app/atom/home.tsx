@@ -10,12 +10,48 @@ import Doctors from "../docters/page";
 import About from "../about/page";
 import Services from "../services/page";
 import Gallery from "../gallery/page";
+import { BiUpArrowAlt } from "react-icons/bi";
+import Popup from "./popup";
+import axios from "axios";
 
 export default function Home() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [isDialogOpen1, setIsDialogOpen1] = useState(false);
     const [isDialogOpen2, setIsDialogOpen2] = useState(false);
+    const [drop, setDrop] = useState(false);
     const [value, setValue] = useState(0);
+    const [message, setMessage] = useState('');
+    const [showPopup, setShowPopup] = useState(false);
+    const [formData, setFormData] = useState({
+        name: '',
+        mobile: '',
+        date: '',
+        department: '',
+        doctor: '',
+      });
+
+      const [formData1, setFormData1] = useState({
+        name: '',
+        image: '',
+        rating: '',
+        feedback: '',
+      });
+
+
+      const handleInputChange = (name:string, value:string) => {
+        setFormData({
+          ...formData,
+          [name]: value,
+        });
+      };
+
+      const handleInputChange1 = (name:string, value:string) => {
+        setFormData1({
+          ...formData1,
+          [name]: value,
+        });
+      };
+
 
     const giverating = async (row: any) => {
         setIsDialogOpen1(true);
@@ -28,7 +64,51 @@ export default function Home() {
     const contectus = async (row: any) => {
         setIsDialogOpen2(true);
     };
+    const scrollToTop = () => {
+        const scrollDuration = 1000; // Duration in milliseconds
+        const scrollStep = -window.scrollY / (scrollDuration / 15); // Calculate scroll step
+        const scrollInterval = setInterval(() => {
+          if (window.scrollY <= 0) {
+            clearInterval(scrollInterval); // Clear interval when scrolled to the top
+          } else {
+            window.scrollBy(0, scrollStep); // Scroll by calculated step
+          }
+        }, 15); // Execute every 15 ms
+      };
 
+      const saveaponitment = async () => {
+        setIsDialogOpen(false)
+        try {
+            const response = await axios.post('http://localhost:8000/cash_sheet/saveappoint',formData); 
+            console.log(response,"responseresponseresponse")
+            setMessage('Your data for appointment saved successfully');
+            setShowPopup(true);
+        } catch (err) {
+            console.error(err);
+            setMessage('Error saving data.');
+            setShowPopup(true);
+        } 
+    };
+
+    const saverating = async () => {
+        setIsDialogOpen1(false)
+        try {
+            const response = await axios.post('http://localhost:8000/cash_sheet/saverating',formData1); 
+            console.log(response,"responseresponseresponse")
+            setMessage('Your data for appointment saved successfully');
+            setShowPopup(true);
+        } catch (err) {
+            console.error(err);
+            setMessage('Error saving data.');
+            setShowPopup(true);
+        } 
+    };
+    
+    const handleClosePopup = () => {
+      setShowPopup(false);
+    };
+
+  
     return (
         <>
             <div className="p-2 relative grid grid-cols-12">
@@ -111,8 +191,13 @@ export default function Home() {
 
 
             </div>
-
+            <div className="fixed bottom-4 right-4">
+  <button onClick={scrollToTop} className="bg-blue-500 hover:translate-y-[-8px] text-white rounded-full shadow-lg transition-transform duration-300 ease-in-out">
+    <BiUpArrowAlt className="w-10 font-bold h-10" />
+  </button>
+</div>
             {/* Rating Dialog */}
+            {showPopup && <Popup message={message} onClose={handleClosePopup} />}
             <Dialog open={isDialogOpen1} onOpenChange={setIsDialogOpen1}>
                 <DialogContent className="w-full max-w-screen-md xs:h-auto overflow-hidden">
                     <DialogHeader>
@@ -121,27 +206,49 @@ export default function Home() {
                         <DialogDescription>
                             <div className="grid grid-cols-12 gap-2">
                                 <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                                    <Ainput title='Name'></Ainput>
+                                <Ainput 
+                    title='Name' 
+                    type='text' 
+                    name='name' 
+                    value={formData1.name} 
+                    handleInputChange={handleInputChange1} 
+                    redlabel='*' 
+                  />
                                 </div>
                                 <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                                    <Ainput title='Your Image'></Ainput>
+                                <Ainput 
+                    title='Your Image' 
+                    type='text' 
+                    name='image' 
+                    value={formData1.image} 
+                    handleInputChange={handleInputChange1} 
+                    redlabel='*' 
+                  />
                                 </div>
+                             
                                 <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                                    <Ainput title='Rating'></Ainput>
+                                <Ainput 
+                    title='Feedback' 
+                    type='text' 
+                    name='feedback' 
+                    value={formData1.feedback} 
+                    handleInputChange={handleInputChange1} 
+                    redlabel='*' 
+                  />
                                 </div>
-                                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                                    <Ainput title='Feedback'></Ainput>
-                                </div>
-                                <div className='col-span-12 flex items-center justify-center lg:mt-4 mt-2'>
-                                    <Rating
-                                        name="rating"
-                                        value={value}
-                                        onChange={(event, newValue) => setValue(newValue ?? 0)}
-                                    />
+                                <div className='col-span-12 md:col-span-6 lg:col-span-6 flex items-center justify-center lg:mt-4 mt-2'>
+                                <Rating
+        name="rating"
+        value={formData1.rating}
+        onChange={(event, newValue) => {
+          setValue(newValue ?? 0); // Update local state
+          handleInputChange1('rating', newValue ?? 0); // Update formData1 state
+        }}
+      />           
                                 </div>
 
                                 <div className='col-span-12 text-center mt-6'>
-                                    <button className='hover:cursor-pointer bg-green-500 text-xl px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-blue-600'>Submit</button>
+                                    <button onClick={saverating} className='hover:cursor-pointer bg-green-500 text-xl px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-blue-600'>Submit</button>
                                 </div>
                             </div>
                         </DialogDescription>
@@ -151,67 +258,73 @@ export default function Home() {
 
             {/* Appointment Dialog */}
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DialogContent className="w-full max-w-screen-md xs:h-auto overflow-hidden">
-                    <DialogHeader>
-                        <DialogTitle>For Appointment Please Fill Form</DialogTitle>
-                        <hr className="bg-body-color mx-2" />
-                        <DialogDescription>
-                            <div className="grid grid-cols-12 gap-2">
-                                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                                    <Ainput title='Name'></Ainput>
-                                </div>
-                                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                                    <Ainput title='Mobile No.'></Ainput>
-                                </div>
-                                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                                    <Ainput title='Date'></Ainput>
-                                </div>
-                                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                                    <Ainput title='Department'></Ainput>
-                                </div>
-                                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                                    <Ainput title='Doctor'></Ainput>
-                                </div>
-                                <div className='col-span-12 md:col-span-6 lg:col-span-6 mt-6'>
-                                    <button className='hover:cursor-pointer bg-green-500 text-xl px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-blue-600'>Submit</button>
-                                </div>
-                            </div>
-                        </DialogDescription>
-                    </DialogHeader>
-                </DialogContent>
-            </Dialog>
+        <DialogContent className="w-full max-w-screen-md xs:h-auto overflow-hidden">
+          <DialogHeader>
+            <DialogTitle>For Appointment Please Fill Form</DialogTitle>
+            <hr className="bg-body-color mx-2" />
+            <DialogDescription>
+              <div className="grid grid-cols-12 gap-2">
+                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+                  <Ainput 
+                    title='Name' 
+                    type='text' 
+                    name='name' 
+                    value={formData.name} 
+                    handleInputChange={handleInputChange} 
+                    redlabel='*' 
+                  />
+                </div>
+                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+                  <Ainput 
+                    title='Mobile No.' 
+                    type='tel' 
+                    name='mobile' 
+                    value={formData.mobile} 
+                    handleInputChange={handleInputChange} 
+                    redlabel='*' 
+                  />
+                </div>
+                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+                  <Ainput 
+                    title='Date' 
+                    type='date' 
+                    name='date' 
+                    value={formData.date} 
+                    handleInputChange={handleInputChange} 
+                    redlabel='*' 
+                  />
+                </div>
+                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+                  <Ainput 
+                    title='Department' 
+                    type='text' 
+                    name='department' 
+                    value={formData.department} 
+                    handleInputChange={handleInputChange} 
+                    redlabel='*' 
+                  />
+                </div>
+                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+                  <Ainput 
+                    title='Doctor' 
+                    type='text' 
+                    name='doctor' 
+                    value={formData.doctor} 
+                    handleInputChange={handleInputChange} 
+                    redlabel='*' 
+                  />
+                </div>
+                <div className='col-span-12 md:col-span-6  flex justify-center lg:col-span-6 mt-6'>
+                  <button onClick={saveaponitment} className='hover:cursor-pointer bg-green-500 text-xl px-2 py-1 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-blue-600'>submit</button>
+                </div>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
 
             
-            <Dialog open={isDialogOpen2} onOpenChange={setIsDialogOpen2}>
-                <DialogContent className="w-full max-w-screen-md xs:h-auto overflow-hidden">
-                    <DialogHeader>
-                        <DialogTitle>Please Fill your Valueable Words</DialogTitle>
-                        <hr className="bg-body-color mx-2" />
-                        <DialogDescription>
-                            <div className="grid grid-cols-12 gap-2">
-                                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                                    <Ainput title='Name'></Ainput>
-                                </div>
-                                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                                    <Ainput title='Mobile No.'></Ainput>
-                                </div>
-                                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                                    <Ainput title='Date'></Ainput>
-                                </div>
-                                {/* <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                                    <Ainput title='Department'></Ainput>
-                                </div> */}
-                                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                                    <Ainput title='Reason'></Ainput>
-                                </div>
-                                <div className='col-span-12  flex justify-center mt-6'>
-                                    <button className='hover:cursor-pointer bg-green-500 text-xl px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-blue-600'>Submit</button>
-                                </div>
-                            </div>
-                        </DialogDescription>
-                    </DialogHeader>
-                </DialogContent>
-            </Dialog>
+           
         </>
     );
 }
