@@ -6,13 +6,12 @@ import { DialogTitle, Rating } from "@mui/material";
 import Ainput from "./input";
 import Image from "next/image";
 import Marquee from './Marquee';
-import Doctors from "../docters/page";
-import About from "../about/page";
-import Services from "../services/page";
-import Gallery from "../gallery/page";
 import { BiUpArrowAlt } from "react-icons/bi";
 import Popup from "./popup";
 import axios from "axios";
+import Services from "../ramdeva/services/page";
+import Doctors from "../ramdeva/docters/page";
+import Gallery from "../ramdeva/gallery/page";
 
 export default function Home() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -88,7 +87,33 @@ export default function Home() {
             setMessage('Error saving data.');
             setShowPopup(true);
         } 
+       };
+
+
+       const handleFileChange = async (event) => {
+        const file = event.target.files?.[0];  
+        console.log(file, "filefile");
+        if (file) {
+            await uploadimage(file);
+        }
     };
+    
+
+       const uploadimage = async (file) => {
+        try {
+          const formData2 = new FormData();
+          formData2.append("name", 'ramdeva');
+          formData2.append("Image", file);
+    
+          const result = await axios.post(
+            `http://localhost:8000/hospital/uploadeddocument`,formData2)
+            console.log(result,"result")
+          }
+             catch (err) {
+            console.error(err);
+        } 
+       };
+
 
     const saverating = async () => {
         setIsDialogOpen1(false)
@@ -176,13 +201,14 @@ export default function Home() {
                             <div className="flex space-x-4"> {/* Space between items */}
                                 {[...Array(4)].map((_, index) => (
                                     <div key={index} className="flex-shrink-0 w-[365px] p-4 flex flex-col items-center justify-center">
-                                        <Image className="rounded-full" src="/profile.jpeg" alt="Profile" width={200} height={200} />
+                                     <Image className="rounded-full" src={`https://erp.autovyn.com/backend/fetch?filePath=demo-1/hospital/b0cd6644-31ba-4fcc-909b-a0b6307a2030.jpeg`} alt="Profile" width={200} height={300} />
                                         <Rating name="read-only" value={3} readOnly />
                                         <p className="capitalize text-base font-serif text-center break-words">
                                             Service of the hospital is very good
                                         </p>
                                     </div>
                                 ))}
+
                             </div>
                         </div>
                     </div>
@@ -216,13 +242,13 @@ export default function Home() {
                   />
                                 </div>
                                 <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                                <Ainput 
+                                <input 
                     title='Your Image' 
-                    type='text' 
+                    type='file' 
                     name='image' 
                     value={formData1.image} 
-                    handleInputChange={handleInputChange1} 
-                    redlabel='*' 
+                    onChange={()=>{handleFileChange(event)}} 
+                   
                   />
                                 </div>
                              

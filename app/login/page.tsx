@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 export default function Login() {
     const router = useRouter();
     const [signup, setSignup] = useState(false);
+    const [Error, setError] = useState('');
     const [formData, setFormData] = useState({
         name: '',
         mobile: '',
@@ -26,7 +27,10 @@ export default function Login() {
     const loginfunction = () => {
         console.log('Form data:', formData);
         if(formData.email=='umesh@gmail.com' && formData.password=='umesh'){
+            setError('')
             router.push(`/hospital`)
+        }else{
+            setError('Please fill the right credencial')
         }
     };
 
@@ -93,8 +97,11 @@ export default function Login() {
                             <Link href={'/'}><span className="text-blue-400 text-base hover:underline">Forgot password?</span></Link>
                         </div>
                     )}
+                      <div className="col-span-12 text-red-800    w-[300px] lg:w-[400px] md:w-[350px] flex justify-center">
+                           {Error}
+                        </div>
                     {!signup && (
-                        <div className="col-span-12 mt-4 mb-4 w-[300px] lg:w-[400px] md:w-[350px] flex justify-center">
+                        <div className="col-span-12   mb-4 w-[300px] lg:w-[400px] md:w-[350px] flex justify-center">
                             <button onClick={loginfunction} id="btn-button118" className="btn w-[300px] lg:w-[400px] md:w-[350px]">Login</button>
                         </div>
                     )}
