@@ -32,6 +32,7 @@ const [departmentoption, setDepartmentoption] = useState([]);
 const [tabledata, setTabledata] = useState([]);
 
 
+
 const handleInputChange = (name: any, value: any) => {
     setFormdata((prevData) => ({
         ...prevData,
@@ -41,18 +42,58 @@ const handleInputChange = (name: any, value: any) => {
 
 useEffect(()=>{
     getpatients()
+    getdeprtment()
 },[])
 
+ 
+  const getdeprtment = async () => {
+    try {
+      const response = await axios.post('http://localhost:8000/hospital/getdepartment');
+      setDepartmentoption(response.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-    const getpatients = async () => {
-        try {
-            const response = await axios.post('http://localhost:8000/hospital/getpatient'); 
-            console.log(response,"ratings")
-            setTabledata(response.data)
-        } catch (err) {
-            console.error(err);
-        } 
-       };
+  const getpatients = async () => {
+    try {
+        const response = await axios.post('http://localhost:8000/hospital/getpatient'); 
+        console.log(response,"ratings")
+        setTabledata(response.data)
+    } catch (err) {
+        console.error(err);
+    } 
+   };
+
+
+
+
+useEffect(()=>{
+    if(formdata?.depart){
+      getdoctors()
+    }else{
+      console.log('nhi chi')
+    }
+  },[formdata?.depart])
+  
+      const getdoctors = async () => {
+        setFormdata({
+          ...formdata,
+          doctor:'',
+        });
+          try {
+              const response = await axios.post('http://localhost:8000/hospital/getdoctor',{
+                depart:formdata?.depart
+              }); 
+              setDoctoroption(response.data);
+          } catch (err) {
+              console.error(err);
+          } 
+         };
+      
+
+
+
 
 
        const headerMapping = {
@@ -75,7 +116,7 @@ useEffect(()=>{
     return (
         <>
             <div className="grid p-2 gap-2 grid-cols-12">
-                <div className="col-span-12  mt-[69px] relative w-full flex items-center cursor-pointer">
+                <div className="col-span-12  lg:mt-[69px] md:mt-[69px] relative w-full flex items-center cursor-pointer">
                     <Image
                         src="/hero-img1.jpeg" // Ensure the path is correct
                         alt="Healthy Health"
@@ -97,8 +138,8 @@ useEffect(()=>{
                     <Ainput title="Date" type="date" handleInputChange={handleInputChange} name="date" value={formdata?.date}></Ainput>
                 </div>
                 
-                <div className="lg:mt-7 md:mt-7 mt-2 ml-2 max-w-16 rounded h-9 font-bold text-base px-2 pt-1.5 hover:bg-green-400 bg-green-500 lg:col-span-1 md:col-span-3 col-span-12">
-                <button >Show</button>
+                <div className="lg:mt-7 md:mt-7 mt-2 ml-2 max-w-16  lg:col-span-1 md:col-span-3 col-span-12">
+                <button className="rounded h-9 font-bold text-base px-2 pt-1 hover:bg-green-400 bg-green-500" >Show</button>
                 </div>
                 <div className="col-span-12 mt-2"><TableComponent onButtonClick={handleButtonClick}  onRowDoubleClick={handleRowDoubleClick} data={tabledata} headerMapping={headerMapping}></TableComponent></div>
             </div>

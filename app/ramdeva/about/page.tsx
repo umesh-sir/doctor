@@ -24,9 +24,6 @@ export default function About() {
     return (
         <>
             <div className="p-2 grid grid-cols-12 gap-2">
-  <button className="mt-20" onClick={fetchRecords}>check</button>
-
-               
          {/* <div className="relative rounded-bl-full rounded-tr-full  col-span-12 text-3xl font-bold flex lg:mt-[69px] justify-center items-center h-10  w-full bg-slate-400 overflow-hidden"> 
             {Array.from({ length: starCount }).map((_, index) => (
         <div

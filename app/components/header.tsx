@@ -22,6 +22,22 @@ import Aselect from '../atom/select';
  
 
 const Header = () => {
+
+  function getCurrentDate(monthsBack = 0) {
+    const today = new Date();
+    today.setMonth(today.getMonth() - monthsBack);
+    const year = today.getFullYear();
+    let month: any = today.getMonth() + 1;
+    let day: any = today.getDate();
+    if (month < 10) {
+        month = "0" + month;
+    }
+    if (day < 10) {
+        day = "0" + day;
+    }
+    return `${year}-${month}-${day}`;
+}
+
   const router = useRouter();
   const [drop, setDrop] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -30,7 +46,7 @@ const Header = () => {
     name: '',
     age:'',
     mobile: '',
-    date: '',
+    date: getCurrentDate(),
     department: '',
     doctor: '',
   });
@@ -67,21 +83,29 @@ const Header = () => {
         } 
        };
 
-      useEffect(()=>{
-      getdoctors()
-    },[formData?.department])
-    
-        const getdoctors = async () => {
-            try {
-                const response = await axios.post('http://localhost:8000/hospital/getdoctor',{
-                  depart:formData?.department
-                }); 
-                setDoctoroption(response.data);
-            } catch (err) {
-                console.error(err);
-            } 
-           };
-
+       useEffect(()=>{
+        if(formData?.department){
+          getdoctors()
+        }else{
+          console.log('nhi chi')
+        }
+      },[formData?.department])
+      
+          const getdoctors = async () => {
+            setFormData({
+              ...formData,
+              doctor:'',
+            });
+              try {
+                  const response = await axios.post('http://localhost:8000/hospital/getdoctor',{
+                    depart:formData?.department
+                  }); 
+                  setDoctoroption(response.data);
+              } catch (err) {
+                  console.error(err);
+              } 
+             };
+             
   const saveaponitment = async () => {
     if (!formData.name || !formData.mobile || !formData.age || !formData.date || !formData.department || !formData.doctor) {
       setSidealertmsg('Please fill the all fields.');
@@ -99,7 +123,7 @@ const Header = () => {
         name: '',
         mobile: '',
         age: '',
-        date: '',
+        date: getCurrentDate(),
         department: '',
         doctor: '',
       })
@@ -154,10 +178,10 @@ const handleClosePopup = () => {
         </div>
         <ul className="lg:flex  md:hidden hidden font-bold capitalize items-center justify-between col-span-7">
           <li className="hover:cursor-pointer  rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/')}>home</li>
-          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('ramdeva/about')}>about us</li>
-          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('ramdeva/services')}>services</li>
-          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('ramdeva/docters')}>doctor team</li>
-          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('ramdeva/gallery')}>gallery</li>
+          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/ramdeva/about')}>about us</li>
+          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/ramdeva/services')}>services</li>
+          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/ramdeva/docters')}>doctor team</li>
+          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/ramdeva/gallery')}>gallery</li>
           <li className="hover:cursor-pointer text-base font-serif font-bold bg-green-500 px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-orange-600 lg:text-xl md:text-lg" onClick={() => setIsDialogOpen(true)}>appointment</li>
         </ul>
 
@@ -182,12 +206,12 @@ const handleClosePopup = () => {
             <ul className="font-bold capitalize rounded    bg-slate-200  lg:w-96 w-80 h-screen absolute top-[70px] right-2">
             <li className="hover:cursor-pointer flex py-2 pl-5 rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/login')}><IoMdLogIn className='-mt-1 pr-2 w-8 h-8'  /><span className=' text-lg font-bold font-serif'>Login</span></li>
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><AiOutlineHome className='-mt-1 pr-2 w-8 h-8'  /><span  className=' text-lg font-bold font-serif'>Home</span></li>
-              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('ramdeva/about')}><FiAirplay className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>About us</span></li>
-              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('ramdeva/services')}><MdMiscellaneousServices  className='-mt-1 pr-2 w-8 h-8' /><span  className=' text-lg font-bold font-serif'>Services</span></li>
-              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('ramdeva/docters')}><RiTeamLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Doctor team</span></li>
-              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('ramdeva/gallery')}><RiGalleryLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Gallery</span></li>
-              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('ramdeva/')}><PiPhoneCall className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Contect us</span></li>
-              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('ramdeva/')}><CiBellOn className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Notifications</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/ramdeva/about')}><FiAirplay className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>About us</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/ramdeva/services')}><MdMiscellaneousServices  className='-mt-1 pr-2 w-8 h-8' /><span  className=' text-lg font-bold font-serif'>Services</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/ramdeva/docters')}><RiTeamLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Doctor team</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/ramdeva/gallery')}><RiGalleryLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Gallery</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/ramdeva/')}><PiPhoneCall className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Contect us</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/ramdeva/')}><CiBellOn className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Notifications</span></li>
               {/* <li className="hover:cursor-pointer   py-2 pl-5 flex  rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><RiLogoutCircleLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Logout</span></li> */}
             </ul>
           </div>

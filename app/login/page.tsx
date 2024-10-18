@@ -26,14 +26,22 @@ export default function Login() {
 
     const loginfunction = () => {
         console.log('Form data:', formData);
-        if(formData.email=='umesh@gmail.com' && formData.password=='umesh'){
-            setError('')
-            router.push(`/hospital`)
-        }else{
-            setError('Please fill the right credencial')
+        if (formData.email === 'umesh@gmail.com' && formData.password === 'umesh') {
+            setError('');
+            document.cookie = "token=umeshkumawat; path=/"; // Example token
+            router.push(`/hospital`);
+        } 
+        else if (formData.email === 'rakesh@gmail.com' && formData.password === 'rakesh') {
+            setError('');
+            document.cookie = "token=umeshkumawat; path=/"; // Example token
+            document.cookie = `userDetails=${JSON.stringify({ email: formData.email })}; path=/`; // Save user details
+            router.push(`/ramdeva/patientview`); // Redirect to patientview
+        }else {
+            setError('Please fill the right credential');
         }
     };
-
+    
+    
     return (
         <div className="relative h-screen bg-cover bg-center" style={{ backgroundImage: 'url(/hero-img1.jpeg)' }}>
             <div className="flex items-center justify-center h-full bg-black bg-opacity-50">

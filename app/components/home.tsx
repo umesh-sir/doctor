@@ -24,19 +24,35 @@ interface RatingItem {
 
 
 export default function Home() {
+
+  function getCurrentDate(monthsBack = 0) {
+    const today = new Date();
+    today.setMonth(today.getMonth() - monthsBack);
+    const year = today.getFullYear();
+    let month: any = today.getMonth() + 1;
+    let day: any = today.getDate();
+    if (month < 10) {
+        month = "0" + month;
+    }
+    if (day < 10) {
+        day = "0" + day;
+    }
+    return `${year}-${month}-${day}`;
+}
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogOpen1, setIsDialogOpen1] = useState(false);
   const [Ratingdata, setRatingdata] = useState<RatingItem[]>([]);
   const [message, setMessage] = useState('');
   const [sidealertmsg, setSidealertmsg] = useState('');
   const [showPopup, setShowPopup] = useState(false);
-  const [departmentoption, setSepartmentoption] = useState([]);
+  const [departmentoption, setDepartmentoption] = useState([]);
   const [doctoroption, setDoctoroption] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
     mobile: '',
     age: '',
-    date: '',
+    date: getCurrentDate(),
     department: '',
     doctor: '',
   });
@@ -58,7 +74,7 @@ export default function Home() {
     try {
       const response = await axios.post('http://localhost:8000/hospital/getdepartment');
 
-      setSepartmentoption(response.data);
+      setDepartmentoption(response.data);
     } catch (err) {
       console.error(err);
     }
@@ -74,21 +90,28 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    getdoctors()
-  }, [formData?.department])
-
-  const getdoctors = async () => {
-    console.log(formData?.department, "formData?.department")
-    try {
-      const response = await axios.post('http://localhost:8000/hospital/getdoctor', formData);
-      console.log(response, "response")
-      // setDoctoroption(response.data);
-    } catch (err) {
-      console.error(err);
+  useEffect(()=>{
+    if(formData?.department){
+      getdoctors()
+    }else{
+      console.log('nhi chi')
     }
-  };
-
+  },[formData?.department])
+  
+      const getdoctors = async () => {
+        setFormData({
+          ...formData,
+          doctor:'',
+        });
+          try {
+              const response = await axios.post('http://localhost:8000/hospital/getdoctor',{
+                depart:formData?.department
+              }); 
+              setDoctoroption(response.data);
+          } catch (err) {
+              console.error(err);
+          } 
+         };
   const handleInputChange = (name: string, value: string) => {
     setFormData({
       ...formData,
@@ -144,7 +167,7 @@ export default function Home() {
         name: '',
         mobile: '',
         age: '',
-        date: '',
+        date: getCurrentDate(),
         department: '',
         doctor: '',
       })
@@ -198,7 +221,14 @@ export default function Home() {
     try {
       const response = await axios.post('http://localhost:8000/hospital/saverating', {...formData1,rating:rating});
       console.log(response, "responseresponseresponse")
+      getratings()
       setMessage('Your data for appointment saved successfully');
+      setFormData1({
+        name: '',
+        image: '',
+        feedback: '',
+      });
+      setRating(null)
       setShowPopup(true);
     } catch (err) {
       console.error(err);

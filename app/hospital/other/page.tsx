@@ -1,6 +1,5 @@
 'use client'
 
-import Ainput from "@/app/atom/input";
 import TableComponent from "@/app/atom/table";
 import axios from "axios";
 import Image from "next/image";
@@ -24,8 +23,10 @@ const Page = () => {
     }
 
 
-const [Data,setData]=useState([])
+ 
 const [formdata,setFormdata]=useState({date:getCurrentDate()})
+const [Ratingdata, setRatingdata] = useState([]);
+
 
 const handleInputChange = (name: any, value: any) => {
     setFormdata((prevData) => ({
@@ -35,42 +36,51 @@ const handleInputChange = (name: any, value: any) => {
 }
 
 useEffect(()=>{
-    getappintment()
+    getratings()
 },[])
 
-    const getappintment = async () => {
-        setData([])
+
+    const getratings = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/hospital/getapointment',{
-                date:formdata?.date
-            }); 
-            console.log(response.data,"responseresponseresponse")
-            console.log(response,"respon")
-            setData(response.data)
+            const response = await axios.post('http://localhost:8000/hospital/allgetrating'); 
+            console.log(response,"ratings")
+            setRatingdata(response.data)
         } catch (err) {
             console.error(err);
         } 
        };
+
+
        const headerMapping = {
-        srno:'Sr. No.',
+        train_id:'Sr.No.',
         name: 'Full Name',
-        age: 'Age (Years)',
-        date: 'Date',
-        mobileno:'Mobile No.',
-        depart:'Department',
-        doctor:'Doctor Name'
+        feedback: 'Feedback',
+        Image:'image'
       };
       
-
-      
+ 
       const handleRowDoubleClick = (rowData:any) => {
         console.log('Double-clicked row data:', rowData);
       };
+      
+
+      const handleButtonClick = async (rowData:any)=>{
+        console.log(rowData,"button")
+        try {
+            const response = await axios.post('http://localhost:8000/hospital/deleterating',{
+                tran_id:rowData?.train_id
+            }); 
+            console.log(response,"ratings")
+            getratings()
+        } catch (err) {
+            console.error(err);
+        } 
+      }
 
     return (
         <>
             <div className="grid p-2 grid-cols-12">
-                <div className="col-span-12  lg:mt-[69px] md:mt-[69px] relative w-full flex items-center cursor-pointer">
+                <div className="col-span-12  mt-[69px] relative w-full flex items-center cursor-pointer">
                     <Image
                         src="/hero-img1.jpeg" // Ensure the path is correct
                         alt="Healthy Health"
@@ -79,19 +89,18 @@ useEffect(()=>{
                         height={300} // Set an appropriate height
                     />
                     <div className="absolute inset-0 flex items-center justify-center">
-                        <span className=" text-xl font-bold">Appointments</span> {/* You can adjust the text style as needed */}
+                        <span className=" text-xl font-bold">Other</span> {/* You can adjust the text style as needed */}
                     </div>
                 </div>
-                <div className="lg:col-span-2 md:col-span-4 col-span-8">
+                {/* <div className="lg:col-span-2 md:col-span-4 col-span-12">
                     <Ainput title="Date" type="date" handleInputChange={handleInputChange} name="date" value={formdata?.date}></Ainput>
                 </div>
                 
-                <div className=" mt-7 ml-2 max-w-16  lg:col-span-1 md:col-span-1 col-span-4">
-                <button className="rounded h-9 font-bold text-base px-2 pt-1 hover:bg-green-400 bg-green-500" onClick={getappintment}>Show</button>
-                </div>
-                <div className="col-span-12 mt-2"><TableComponent  onRowDoubleClick={handleRowDoubleClick} data={Data} headerMapping={headerMapping}></TableComponent></div>
+                <div className="mt-7 ml-2 rounded h-9 font-bold text-base px-2 pt-1.5 hover:bg-green-400 bg-green-500 lg:col-span-1 md:col-span-1 col-span-1">
+                <button onClick={getratings}>Show</button>
+                </div> */}
+                <div className="col-span-12 mt-2"><TableComponent onButtonClick={handleButtonClick}  onRowDoubleClick={handleRowDoubleClick} data={Ratingdata} headerMapping={headerMapping}></TableComponent></div>
             </div>
-
         </>
     )
 }

@@ -5,14 +5,11 @@ import { FiAlignJustify } from "react-icons/fi";
 import { Dialog, DialogContent, DialogDescription, DialogHeader } from "../atom/dailog";
 import { DialogTitle } from "@mui/material";
 import Image from 'next/image';
-import { IoMdLogIn } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineHome } from "react-icons/ai";
-import { MdMiscellaneousServices } from "react-icons/md";
 import { RiTeamLine } from "react-icons/ri";
 import { RiGalleryLine } from "react-icons/ri";
 import { RiLogoutCircleLine } from "react-icons/ri";
-import { PiPhoneCall } from "react-icons/pi";
 import { CiBellOn } from "react-icons/ci";
 import { FiAirplay } from "react-icons/fi";
 import axios from 'axios';
@@ -20,8 +17,26 @@ import { BsStarHalf } from "react-icons/bs";
 import Popup from '../atom/popup';
 import Ainput from '../atom/input';
 import Aselect from '../atom/select';
+import { RiHeartAddLine } from "react-icons/ri";
 
 const HospitalHeader = () => {
+
+  function getCurrentDate(monthsBack = 0) {
+    const today = new Date();
+    today.setMonth(today.getMonth() - monthsBack);
+    const year = today.getFullYear();
+    let month: any = today.getMonth() + 1;
+    let day: any = today.getDate();
+    if (month < 10) {
+        month = "0" + month;
+    }
+    if (day < 10) {
+        day = "0" + day;
+    }
+    return `${year}-${month}-${day}`;
+}
+
+
   const router = useRouter();
   const [drop, setDrop] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -32,7 +47,7 @@ const HospitalHeader = () => {
     name: '',
     mobile: '',
     age:'',
-    date: '',
+    date: getCurrentDate(),
     department: '',
     doctor: '',
   });
@@ -56,7 +71,6 @@ const HospitalHeader = () => {
     const getdeprtment = async () => {
         try {
             const response = await axios.post('http://localhost:8000/hospital/getdepartment'); 
-      
             setSepartmentoption(response.data);
         } catch (err) {
             console.error(err);
@@ -66,10 +80,18 @@ const HospitalHeader = () => {
 
 
        useEffect(()=>{
-        getdoctors()
+        if(formData?.department){
+          getdoctors()
+        }else{
+          console.log('nhi chi')
+        }
       },[formData?.department])
       
           const getdoctors = async () => {
+            setFormData({
+              ...formData,
+              doctor:'',
+            });
               try {
                   const response = await axios.post('http://localhost:8000/hospital/getdoctor',{
                     depart:formData?.department
@@ -103,7 +125,7 @@ const HospitalHeader = () => {
         name: '',
         mobile: '',
         age: '',
-        date: '',
+        date:getCurrentDate(),
         department: '',
         doctor: '',
       })
@@ -121,6 +143,12 @@ const handleClosePopup = () => {
 
 const takeappointment = async (row: any) => {
   setIsDialogOpen(true);
+};
+
+
+const handleLogout = () => {
+  document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/"; // Clear the cookie
+  router.push('/'); // Redirect to home page
 };
 
   return (
@@ -161,9 +189,9 @@ const takeappointment = async (row: any) => {
         </div>
         <ul className="lg:flex  md:hidden hidden font-bold capitalize items-center justify-between col-span-7">
           <li className="hover:cursor-pointer  rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/hospital/appointments')}>Appointments</li>
-          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/hospital/ratings')}>Ratings</li>
+          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/hospital/rating')}>Ratings</li>
           <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/hospital/patient')}>Patient</li>
-          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/hospital/saff')}>Staff</li>
+          <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/hospital/staff')}>Staff</li>
           <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/hospital/other')}>Other</li>
           <li className="hover:cursor-pointer text-base font-serif font-bold bg-green-500 px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-orange-600 lg:text-xl md:text-lg" onClick={takeappointment}>add appointment</li>
         </ul>
@@ -184,16 +212,17 @@ const takeappointment = async (row: any) => {
    
         {drop && (
           <div ref={dropdownRef}> 
-            <ul className="font-bold capitalize rounded    bg-slate-200  lg:w-96 w-80 h-screen absolute top-[70px] right-2">
+            <ul className="font-bold capitalize rounded    bg-slate-200  lg:w-96 w-80 h-screen absolute top-[70px] right-2" >
             <li className="hover:cursor-pointer py-2 flex pl-5 rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><CgProfile className='-mt-1 pr-2 w-8 h-8' /><span className=' text-lg font-bold font-serif'>Your Profile</span></li>
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/hospital')}><AiOutlineHome className='-mt-1 pr-2 w-8 h-8'  /><span  className=' text-lg font-bold font-serif'>Home</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><RiHeartAddLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Add Appointment</span></li>
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/hospital/appointments')}><FiAirplay className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Appointments</span></li>
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/hospital/rating')}><BsStarHalf  className='-mt-1 pr-2 w-8 h-8' /><span  className=' text-lg font-bold font-serif'>Ratings</span></li>
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/hospital/patient')}><RiTeamLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Patient</span></li>
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/hospital/staff')}><RiGalleryLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Staff</span></li>
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/hospital/other')}><RiGalleryLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Other</span></li>
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><CiBellOn className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Notifications</span></li>
-              <li className="hover:cursor-pointer   py-2 pl-5 flex  rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><RiLogoutCircleLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Logout</span></li>
+              <li className="hover:cursor-pointer   py-2 pl-5 flex  rounded bg-slate-400 hover:bg-slate-700 border" onClick={handleLogout}><RiLogoutCircleLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Logout</span></li>
             </ul>
           </div>
         )}
