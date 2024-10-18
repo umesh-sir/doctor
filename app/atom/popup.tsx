@@ -1,7 +1,11 @@
-// Popup.js
 import React from 'react';
 
-const Popup = ({ message, onClose }) => {
+interface PopupProps {
+    message: string; // You can adjust this type based on your needs
+    onClose: () => void;
+}
+
+const Popup: React.FC<PopupProps> = ({ message, onClose }) => {
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white p-5 rounded shadow-lg">

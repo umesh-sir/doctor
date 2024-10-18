@@ -22,30 +22,6 @@ export default function Doctors() {
     return (
         <>
             <div className="p-2 grid grid-cols-12">
-                
-        {/* <div className="relative col-span-12 rounded-bl-full rounded-tr-full text-3xl font-bold flex lg:mt-[69px] justify-center items-center h-10  -mb-4 w-full bg-slate-400 overflow-hidden">
-            {Array.from({ length: starCount }).map((_, index) => (
-        <div
-          key={index}
-          className="absolute"
-          style={{
-            top: `${Math.random() * 100}vh`,
-            left: `${Math.random() * 100}vw`,
-            width: '5px',
-            height: '5px',
-            backgroundColor: 'white',
-            borderRadius: '50%',
-            animation: `blink 1.5s infinite ${Math.random() * 2}s`,
-          }}
-        />
-      ))}
-      <style jsx>{`
-        @keyframes blink {
-          0%, 100% { opacity: 0; }
-          50% { opacity: 1; }
-        }
-      `}</style>     Our Doctors Team
-       </div> */}
        <div className=" flex justify-center text-3xl font-bold col-span-12 mt-[69px]">
    -- Our Doctors Team --
     </div>

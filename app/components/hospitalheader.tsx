@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import { FiAlignJustify } from "react-icons/fi";
 import { Dialog, DialogContent, DialogDescription, DialogHeader } from "../atom/dailog";
 import { DialogTitle } from "@mui/material";
-import Ainput from './input';
 import Image from 'next/image';
 import { IoMdLogIn } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
@@ -17,17 +16,22 @@ import { PiPhoneCall } from "react-icons/pi";
 import { CiBellOn } from "react-icons/ci";
 import { FiAirplay } from "react-icons/fi";
 import axios from 'axios';
-import Popup from './popup';
+import { BsStarHalf } from "react-icons/bs";
+import Popup from '../atom/popup';
+import Ainput from '../atom/input';
+import Aselect from '../atom/select';
 
 const HospitalHeader = () => {
   const router = useRouter();
   const [drop, setDrop] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-
+  const [sidealertmsg, setSidealertmsg] = useState('');
+  const [departmentoption, setSepartmentoption] = useState([]);
+  const [doctoroption, setDoctoroption] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
     mobile: '',
+    age:'',
     date: '',
     department: '',
     doctor: '',
@@ -45,6 +49,37 @@ const HospitalHeader = () => {
     });
   };
 
+  useEffect(()=>{
+        getdeprtment()
+},[])
+
+    const getdeprtment = async () => {
+        try {
+            const response = await axios.post('http://localhost:8000/hospital/getdepartment'); 
+      
+            setSepartmentoption(response.data);
+        } catch (err) {
+            console.error(err);
+        } 
+       };
+
+
+
+       useEffect(()=>{
+        getdoctors()
+      },[formData?.department])
+      
+          const getdoctors = async () => {
+              try {
+                  const response = await axios.post('http://localhost:8000/hospital/getdoctor',{
+                    depart:formData?.department
+                  }); 
+                  setDoctoroption(response.data);
+              } catch (err) {
+                  console.error(err);
+              } 
+             };
+
   const handleNavigation = (path:string) => {
     router.push(path);
     setDrop(false);
@@ -52,23 +87,41 @@ const HospitalHeader = () => {
 
 
   const saveaponitment = async () => {
+    if (!formData.name || !formData.mobile || !formData.age || !formData.date || !formData.department || !formData.doctor) {
+      setSidealertmsg('Please fill the all fields.');
+      return;
+    } else {
+      setSidealertmsg('')
+    }
     setIsDialogOpen(false)
     try {
-        const response = await axios.post('http://localhost:8000/cash_sheet/saveappoint',formData); 
-        console.log(response,"responseresponseresponse")
-        setMessage('Your data for appointment saved successfully');
-        setShowPopup(true);
+      const response = await axios.post('http://localhost:8000/hospital/saveappoint', formData);
+      console.log(response, "responseresponseresponse")
+      setMessage('Your data for appointment saved successfully');
+      setShowPopup(true);
+      setFormData({
+        name: '',
+        mobile: '',
+        age: '',
+        date: '',
+        department: '',
+        doctor: '',
+      })
     } catch (err) {
-        console.error(err);
-        setMessage('Error saving data.');
-        setShowPopup(true);
-    } 
-};
+      console.error(err);
+      setMessage('Error saving data.');
+      setShowPopup(true);
+    }
+  };
 
 const handleClosePopup = () => {
   setShowPopup(false);
 };
 
+
+const takeappointment = async (row: any) => {
+  setIsDialogOpen(true);
+};
 
   return (
     <>
@@ -112,7 +165,7 @@ const handleClosePopup = () => {
           <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/hospital/patient')}>Patient</li>
           <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/hospital/saff')}>Staff</li>
           <li className="hover:cursor-pointer rounded transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-darkshadow text-base font-serif font-bold px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-slate-950 lg:text-xl md:text-lg" onClick={() => handleNavigation('/hospital/other')}>Other</li>
-          <li className="hover:cursor-pointer text-base font-serif font-bold bg-green-500 px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-orange-600 lg:text-xl md:text-lg" onClick={() => setIsDialogOpen(true)}>add appointment</li>
+          <li className="hover:cursor-pointer text-base font-serif font-bold bg-green-500 px-2 py-2 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-orange-600 lg:text-xl md:text-lg" onClick={takeappointment}>add appointment</li>
         </ul>
 
         <div className="col-span-7 capitalize text-2xl font-bold flex items-center lg:hidden justify-center">
@@ -133,7 +186,12 @@ const handleClosePopup = () => {
           <div ref={dropdownRef}> 
             <ul className="font-bold capitalize rounded    bg-slate-200  lg:w-96 w-80 h-screen absolute top-[70px] right-2">
             <li className="hover:cursor-pointer py-2 flex pl-5 rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><CgProfile className='-mt-1 pr-2 w-8 h-8' /><span className=' text-lg font-bold font-serif'>Your Profile</span></li>
-              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><AiOutlineHome className='-mt-1 pr-2 w-8 h-8'  /><span  className=' text-lg font-bold font-serif'>Home</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/hospital')}><AiOutlineHome className='-mt-1 pr-2 w-8 h-8'  /><span  className=' text-lg font-bold font-serif'>Home</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/hospital/appointments')}><FiAirplay className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Appointments</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/hospital/rating')}><BsStarHalf  className='-mt-1 pr-2 w-8 h-8' /><span  className=' text-lg font-bold font-serif'>Ratings</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/hospital/patient')}><RiTeamLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Patient</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/hospital/staff')}><RiGalleryLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Staff</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/hospital/other')}><RiGalleryLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Other</span></li>
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><CiBellOn className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Notifications</span></li>
               <li className="hover:cursor-pointer   py-2 pl-5 flex  rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><RiLogoutCircleLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Logout</span></li>
             </ul>
@@ -149,56 +207,73 @@ const handleClosePopup = () => {
             <DialogDescription>
               <div className="grid grid-cols-12 gap-2">
                 <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                  <Ainput 
-                    title='Name' 
-                    type='text' 
-                    name='name' 
-                    value={formData.name} 
-                    handleInputChange={handleInputChange} 
-                    redlabel='*' 
+                  <Ainput
+                    title='Name'
+                    type='text'
+                    name='name'
+                    value={formData.name}
+                    handleInputChange={handleInputChange}
+                    redlabel='*'
+
+
                   />
                 </div>
                 <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                  <Ainput 
-                    title='Mobile No.' 
-                    type='tel' 
-                    name='mobile' 
-                    value={formData.mobile} 
-                    handleInputChange={handleInputChange} 
-                    redlabel='*' 
+                  <Ainput
+                    title='Age'
+                    type='number'
+                    name='age'
+                    value={formData.age}
+                    handleInputChange={handleInputChange}
+                    redlabel='*'
+
+
                   />
                 </div>
                 <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                  <Ainput 
-                    title='Date' 
-                    type='date' 
-                    name='date' 
-                    value={formData.date} 
-                    handleInputChange={handleInputChange} 
-                    redlabel='*' 
+                  <Ainput
+                    title='Mobile No.'
+                    type='tel'
+                    name='mobile'
+                    value={formData.mobile}
+                    handleInputChange={handleInputChange}
+                    redlabel='*'
+
+
                   />
                 </div>
                 <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                  <Ainput 
-                    title='Department' 
-                    type='text' 
-                    name='department' 
-                    value={formData.department} 
-                    handleInputChange={handleInputChange} 
-                    redlabel='*' 
+                  <Ainput
+                    title='Date'
+                    type='date'
+                    name='date'
+                    value={formData.date}
+                    handleInputChange={handleInputChange}
+                    redlabel='*'
+
+
                   />
                 </div>
                 <div className='col-span-12 md:col-span-6 lg:col-span-6'>
-                  <Ainput 
-                    title='Doctor' 
-                    type='text' 
-                    name='doctor' 
-                    value={formData.doctor} 
-                    handleInputChange={handleInputChange} 
-                    redlabel='*' 
+                  <Aselect
+                    title='Department'
+                    name='department'
+                    value={formData.department}
+                    options={departmentoption}
+                    handleInputChange={handleInputChange}
                   />
                 </div>
-                <div className='col-span-12 md:col-span-6  flex justify-center lg:col-span-6 mt-6'>
+                <div className='col-span-12 md:col-span-6 lg:col-span-6'>
+                <Aselect
+                    title='Doctor'
+                    name='doctor'
+                    options={doctoroption}
+                    value={formData.doctor}
+                    handleInputChange={handleInputChange}
+                  />
+                </div>
+                <div className="col-span-12 flex justify-center text-red-600 mt-2" >{sidealertmsg}</div>
+                <div className='col-span-12 md:col-span-12  flex justify-center lg:col-span-12 mt-2'>
                   <button onClick={saveaponitment} className='hover:cursor-pointer bg-green-500 text-xl px-2 py-1 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-blue-600'>submit</button>
                 </div>
               </div>

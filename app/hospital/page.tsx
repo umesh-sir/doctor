@@ -28,10 +28,7 @@ export default function About() {
     return (
         <>
             <div className="p-2 grid grid-cols-12 gap-2">
-                <div className="col-span-12 mt-20">
-<button onClick={gotorating} className="text-red-500 z-100">go to reting</button>
-                </div>
-                <div className="col-span-12 relative w-full flex items-center cursor-pointer">
+                <div className="col-span-12 mt-[60px] relative w-full flex items-center cursor-pointer">
                     <Image 
                         src="/hero-img1.jpeg" // Ensure the path is correct
                         alt="Healthy Health"
@@ -39,11 +36,7 @@ export default function About() {
                         width={500} // Set an appropriate width
                         height={300} // Set an appropriate height
                     />
-                     
                 </div>
-
-       
-
             </div>
         </>
     );

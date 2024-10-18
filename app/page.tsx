@@ -1,9 +1,10 @@
-import Home from "./atom/home";
+import Home from "./components/home";
+
 
 export default function Page() {
   return (
     <>
-      <Home />
+      <Home/>
     </>
   );
 }

@@ -1,9 +1,10 @@
 'use client'
 import { usePathname } from "next/navigation";
-import Header from "./atom/header"; // Default Header
-import Footer from "./atom/footer";   // Default Footer
-import HospitalHeader from "./atom/hospitalheader";
-import HospitalFooter from "./atom/hospitalfooter";
+import Header from "./components/header";
+import HospitalHeader from "./components/hospitalheader";
+import HospitalFooter from "./components/hospitalfooter";
+import Footer from "./components/footer";
+ 
 
 const ClientLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
@@ -21,8 +22,8 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
       {children}
 
       {/* Render the appropriate footer based on the current page */}
-      {isHospitalPage && <HospitalFooter />}
-      {!isLoginPage && !isHospitalPage && <Footer />}
+      {isHospitalPage && <HospitalFooter/>}
+      {!isLoginPage && !isHospitalPage && <Footer/>}
     </>
   );
 };

@@ -1,6 +1,7 @@
 'use client'
 
 import Ainput from "@/app/atom/input";
+import Aselect from "@/app/atom/select";
 import TableComponent from "@/app/atom/table";
 import axios from "axios";
 import Image from "next/image";
@@ -25,8 +26,10 @@ const Page = () => {
 
 
  
-const [formdata,setFormdata]=useState({date:getCurrentDate()})
-const [Ratingdata, setRatingdata] = useState([]);
+const [formdata,setFormdata]=useState({date:getCurrentDate(),doctor:'',depart:''})
+const [doctoroption, setDoctoroption] = useState([]);
+const [departmentoption, setDepartmentoption] = useState([]);
+const [tabledata, setTabledata] = useState([]);
 
 
 const handleInputChange = (name: any, value: any) => {
@@ -37,15 +40,15 @@ const handleInputChange = (name: any, value: any) => {
 }
 
 useEffect(()=>{
-    getratings()
+    getpatients()
 },[])
 
 
-    const getratings = async () => {
+    const getpatients = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/hospital/allgetrating'); 
+            const response = await axios.post('http://localhost:8000/hospital/getpatient'); 
             console.log(response,"ratings")
-            setRatingdata(response.data)
+            setTabledata(response.data)
         } catch (err) {
             console.error(err);
         } 
@@ -67,20 +70,11 @@ useEffect(()=>{
 
       const handleButtonClick = async (rowData:any)=>{
         console.log(rowData,"button")
-        try {
-            const response = await axios.post('http://localhost:8000/hospital/deleterating',{
-                tran_id:rowData?.train_id
-            }); 
-            console.log(response,"ratings")
-            getratings()
-        } catch (err) {
-            console.error(err);
-        } 
       }
 
     return (
         <>
-            <div className="grid p-2 grid-cols-12">
+            <div className="grid p-2 gap-2 grid-cols-12">
                 <div className="col-span-12  mt-[69px] relative w-full flex items-center cursor-pointer">
                     <Image
                         src="/hero-img1.jpeg" // Ensure the path is correct
@@ -90,17 +84,23 @@ useEffect(()=>{
                         height={300} // Set an appropriate height
                     />
                     <div className="absolute inset-0 flex items-center justify-center">
-                        <span className=" text-xl font-bold">Ratings</span> {/* You can adjust the text style as needed */}
+                        <span className=" text-xl font-bold">Patients</span> {/* You can adjust the text style as needed */}
                     </div>
                 </div>
-                {/* <div className="lg:col-span-2 md:col-span-4 col-span-12">
+                <div className="lg:col-span-2 md:col-span-3 col-span-12">
+                    <Aselect title="Department"  options={departmentoption}  handleInputChange={handleInputChange} name="depart" value={formdata?.depart}/>
+                </div>
+                <div className="lg:col-span-2 md:col-span-3 col-span-12">
+                    <Aselect title="Doctor" options={doctoroption} handleInputChange={handleInputChange} name="doctor" value={formdata?.doctor} />
+                </div>
+                <div className="lg:col-span-2 md:col-span-3 col-span-12">
                     <Ainput title="Date" type="date" handleInputChange={handleInputChange} name="date" value={formdata?.date}></Ainput>
                 </div>
                 
-                <div className="mt-7 ml-2 rounded h-9 font-bold text-base px-2 pt-1.5 hover:bg-green-400 bg-green-500 lg:col-span-1 md:col-span-1 col-span-1">
-                <button onClick={getratings}>Show</button>
-                </div> */}
-                <div className="col-span-12 mt-2"><TableComponent onButtonClick={handleButtonClick}  onRowDoubleClick={handleRowDoubleClick} data={Ratingdata} headerMapping={headerMapping}></TableComponent></div>
+                <div className="lg:mt-7 md:mt-7 mt-2 ml-2 max-w-16 rounded h-9 font-bold text-base px-2 pt-1.5 hover:bg-green-400 bg-green-500 lg:col-span-1 md:col-span-3 col-span-12">
+                <button >Show</button>
+                </div>
+                <div className="col-span-12 mt-2"><TableComponent onButtonClick={handleButtonClick}  onRowDoubleClick={handleRowDoubleClick} data={tabledata} headerMapping={headerMapping}></TableComponent></div>
             </div>
         </>
     )
