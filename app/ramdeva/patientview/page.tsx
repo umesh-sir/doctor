@@ -19,7 +19,10 @@ import { FiAlignJustify } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/atom/loading";
 
-
+interface UserDetails {
+    name: string;
+    // Add other fields as necessary
+}
 
 const Page = () => {
 
@@ -41,7 +44,7 @@ const Page = () => {
 
 const [Data,setData]=useState([])
 const [formdata,setFormdata]=useState({date:getCurrentDate()})
-const [userDetails, setUserDetails] = useState(null);
+const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
 const [drop, setDrop] = useState(false);
 const dropdownRef = useRef(null)
 const [isLoading, setIsLoading] = useState(false);

@@ -71,7 +71,7 @@ export default function Login() {
          Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: `Otp send to ${formdata?.mobile} successfully`,
+            text: `Otp send to ${formData?.mobile} successfully`,
           });
         } catch (err) {
             console.error(err);
