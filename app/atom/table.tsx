@@ -16,7 +16,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
     const [searchQuery, setSearchQuery] = useState<string>('');
 
     if (!data || data.length === 0) {
-        return <div className='flex justify-center items-center text-xl font-bold h-[400px]'>...Loading</div>;
+        return <div className='flex justify-center items-center text-xl font-bold h-[400px]'>There is no data found</div>;
     }
 
     const headers = Object.keys(data[0]);

@@ -18,8 +18,32 @@ import Popup from '../atom/popup';
 import Ainput from '../atom/input';
 import Aselect from '../atom/select';
 import { RiHeartAddLine } from "react-icons/ri";
+import Swal from 'sweetalert2';
 
 const HospitalHeader = () => {
+
+
+  function showSideAlert(message: any, type: any) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      customClass: {
+        container: "side-alert-container",
+        popup: `side-alert-${type}`,
+        title: "side-alert-title",
+        icon: "side-alert-icon",
+      },
+    });
+
+    Toast.fire({
+      icon: type,
+      title: message,
+    });
+  }
+
 
   function getCurrentDate(monthsBack = 0) {
     const today = new Date();
@@ -40,7 +64,7 @@ const HospitalHeader = () => {
   const router = useRouter();
   const [drop, setDrop] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [sidealertmsg, setSidealertmsg] = useState('');
+   
   const [departmentoption, setSepartmentoption] = useState([]);
   const [doctoroption, setDoctoroption] = useState([]);
   const [formData, setFormData] = useState({
@@ -53,8 +77,6 @@ const HospitalHeader = () => {
   });
 
 
-  const [message, setMessage] = useState('');
-  const [showPopup, setShowPopup] = useState(false);
   const dropdownRef = useRef(null); // Create a ref for the dropdown
 
   const handleInputChange = (name:string, value:string) => {
@@ -109,18 +131,33 @@ const HospitalHeader = () => {
 
 
   const saveaponitment = async () => {
-    if (!formData.name || !formData.mobile || !formData.age || !formData.date || !formData.department || !formData.doctor) {
-      setSidealertmsg('Please fill the all fields.');
+    if(!formData.name){
+      showSideAlert("Please fill the name", "warning");
       return;
-    } else {
-      setSidealertmsg('')
-    }
+  }
+  if(!formData.mobile){
+    showSideAlert("Please fill the mobile no.", "warning");
+    return;
+}
+if(!formData.age){
+  showSideAlert("Please fill the age", "warning");
+  return;
+}
+if(!formData.date){
+showSideAlert("Please fill the date", "warning");
+return;
+}
+if(!formData.department){
+showSideAlert("Please fill the department", "warning");
+return;
+}
+if(!formData.doctor){
+showSideAlert("Please fill the doctor", "warning");
+return;
+}
     setIsDialogOpen(false)
     try {
       const response = await axios.post('http://localhost:8000/hospital/saveappoint', formData);
-      console.log(response, "responseresponseresponse")
-      setMessage('Your data for appointment saved successfully');
-      setShowPopup(true);
       setFormData({
         name: '',
         mobile: '',
@@ -129,17 +166,22 @@ const HospitalHeader = () => {
         department: '',
         doctor: '',
       })
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Appointment Save successfully',
+      });
     } catch (err) {
       console.error(err);
-      setMessage('Error saving data.');
-      setShowPopup(true);
+      Swal.fire({
+        icon: 'warning',
+        title: 'warning',
+        text: 'Can not save the appointment',
+      });
     }
   };
 
-const handleClosePopup = () => {
-  setShowPopup(false);
-};
-
+ 
 
 const takeappointment = async (row: any) => {
   setIsDialogOpen(true);
@@ -227,7 +269,7 @@ const handleLogout = () => {
           </div>
         )}
       </div>
-      {showPopup && <Popup message={message} onClose={handleClosePopup} />}
+      
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="w-full max-w-screen-md xs:h-auto overflow-hidden">
           <DialogHeader>
@@ -243,7 +285,7 @@ const handleLogout = () => {
                     value={formData.name}
                     handleInputChange={handleInputChange}
                     redlabel='*'
-
+max={50}
 
                   />
                 </div>
@@ -256,6 +298,7 @@ const handleLogout = () => {
                     handleInputChange={handleInputChange}
                     redlabel='*'
 
+                    max={2}
 
                   />
                 </div>
@@ -267,6 +310,7 @@ const handleLogout = () => {
                     value={formData.mobile}
                     handleInputChange={handleInputChange}
                     redlabel='*'
+                    max={10}
 
 
                   />
@@ -301,7 +345,7 @@ const handleLogout = () => {
                     handleInputChange={handleInputChange}
                   />
                 </div>
-                <div className="col-span-12 flex justify-center text-red-600 mt-2" >{sidealertmsg}</div>
+            
                 <div className='col-span-12 md:col-span-12  flex justify-center lg:col-span-12 mt-2'>
                   <button onClick={saveaponitment} className='hover:cursor-pointer bg-green-500 text-xl px-2 py-1 rounded-tl-xl text-ellipsis text-white whitespace-nowrap rounded-br-xl hover:bg-blue-600'>submit</button>
                 </div>

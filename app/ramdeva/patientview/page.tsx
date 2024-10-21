@@ -17,6 +17,7 @@ import { BsStarHalf } from "react-icons/bs";
 import { RiHeartAddLine } from "react-icons/ri";
 import { FiAlignJustify } from "react-icons/fi";
 import { useRouter } from "next/navigation";
+import Loading from "@/app/atom/loading";
 
 
 
@@ -43,6 +44,7 @@ const [formdata,setFormdata]=useState({date:getCurrentDate()})
 const [userDetails, setUserDetails] = useState(null);
 const [drop, setDrop] = useState(false);
 const dropdownRef = useRef(null)
+const [isLoading, setIsLoading] = useState(false);
 const router = useRouter();
 
 
@@ -70,6 +72,7 @@ useEffect(()=>{
 
     const getappintment = async () => {
         setData([])
+        setIsLoading(true)
         try {
             const response = await axios.post('http://localhost:8000/hospital/getapointment',{
                 date:formdata?.date
@@ -77,6 +80,7 @@ useEffect(()=>{
             console.log(response.data,"responseresponseresponse")
             console.log(response,"respon")
             setData(response.data)
+            setIsLoading(false)
         } catch (err) {
             console.error(err);
         } 
@@ -128,7 +132,7 @@ useEffect(()=>{
             <ul className="font-bold capitalize rounded z-10 bg-slate-200 lg:w-96 w-80 h-screen absolute top-[70px] right-2">
                 <li className="hover:cursor-pointer py-2 flex pl-5 rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/ramdeva/patientview')}>
                     <CgProfile className='-mt-1 pr-2 w-8 h-8' />
-                    <span className='text-lg font-bold font-serif'>Your Profile</span>
+                    <span className='text-lg font-bold font-serif'>{userDetails?.name}</span>
                 </li>
                 <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/ramdeva/patientview')}><AiOutlineHome className='-mt-1 pr-2 w-8 h-8'  /><span  className=' text-lg font-bold font-serif'>Home</span></li>
  
@@ -154,7 +158,7 @@ useEffect(()=>{
                 </div>
                 <div className="col-span-12 mt-2"><TableComponent  onRowDoubleClick={handleRowDoubleClick} data={Data} headerMapping={headerMapping}></TableComponent></div>
             </div>
-
+            <Loading isLoading={isLoading} />
         </>
     )
 }

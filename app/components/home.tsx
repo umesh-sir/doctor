@@ -13,6 +13,8 @@ import Popup from "../atom/popup";
 import Ainput from "../atom/input";
 import Aselect from "../atom/select";
 import React from "react";
+import Swal from "sweetalert2";
+import Loading from "../atom/loading";
 
 
 interface RatingItem {
@@ -24,6 +26,29 @@ interface RatingItem {
 
 
 export default function Home() {
+
+
+  function showSideAlert(message: any, type: any) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      customClass: {
+        container: "side-alert-container",
+        popup: `side-alert-${type}`,
+        title: "side-alert-title",
+        icon: "side-alert-icon",
+      },
+    });
+
+    Toast.fire({
+      icon: type,
+      title: message,
+    });
+  }
+
 
   function getCurrentDate(monthsBack = 0) {
     const today = new Date();
@@ -43,9 +68,7 @@ export default function Home() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogOpen1, setIsDialogOpen1] = useState(false);
   const [Ratingdata, setRatingdata] = useState<RatingItem[]>([]);
-  const [message, setMessage] = useState('');
   const [sidealertmsg, setSidealertmsg] = useState('');
-  const [showPopup, setShowPopup] = useState(false);
   const [departmentoption, setDepartmentoption] = useState([]);
   const [doctoroption, setDoctoroption] = useState([]);
   const [formData, setFormData] = useState({
@@ -63,6 +86,7 @@ export default function Home() {
     feedback: '',
   });
   const [rating, setRating] = React.useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
 
   useEffect(() => {
@@ -81,10 +105,12 @@ export default function Home() {
   };
 
   const getratings = async () => {
+    setIsLoading(true)
     try {
       const response = await axios.post('http://localhost:8000/hospital/getrating');
       console.log(response, "rating")
       setRatingdata(response.data);
+      setIsLoading(false)
     } catch (err) {
       console.error(err);
     }
@@ -151,18 +177,35 @@ export default function Home() {
   };
 
   const saveaponitment = async () => {
-    if (!formData.name || !formData.mobile || !formData.age || !formData.date || !formData.department || !formData.doctor) {
-      setSidealertmsg('Please fill the all fields.');
-      return;
-    } else {
-      setSidealertmsg('')
+    if(!formData.name){
+        showSideAlert("Please fill the name", "warning");
+        return;
     }
+    if(!formData.mobile){
+      showSideAlert("Please fill the mobile no.", "warning");
+      return;
+  }
+  if(!formData.age){
+    showSideAlert("Please fill the age", "warning");
+    return;
+}
+if(!formData.date){
+  showSideAlert("Please fill the date", "warning");
+  return;
+}
+if(!formData.department){
+  showSideAlert("Please fill the department", "warning");
+  return;
+}
+if(!formData.doctor){
+  showSideAlert("Please fill the doctor", "warning");
+  return;
+}
+    
     setIsDialogOpen(false)
     try {
       const response = await axios.post('http://localhost:8000/hospital/saveappoint', formData);
       console.log(response, "responseresponseresponse")
-      setMessage('Your data for appointment saved successfully');
-      setShowPopup(true);
       setFormData({
         name: '',
         mobile: '',
@@ -171,10 +214,18 @@ export default function Home() {
         department: '',
         doctor: '',
       })
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Appointment Save successfully',
+      });
     } catch (err) {
       console.error(err);
-      setMessage('Error saving data.');
-      setShowPopup(true);
+      Swal.fire({
+        icon: 'warning',
+        title: 'warning',
+        text: 'Can not save the appointment',
+      });
     }
   };
 
@@ -210,36 +261,48 @@ export default function Home() {
 
 
   const saverating = async () => {
-    console.log(formData1, "formdata1")
-    if (!formData1.name || !formData1.image || !formData1.feedback || !rating) {
-      setSidealertmsg('Please fill the all fields.');
+    if(!formData1.name){
+      showSideAlert("Please fill the name", "warning");
       return;
-    } else {
-      setSidealertmsg('');
-    }
+  }
+  if(!formData1.image){
+    showSideAlert("Please fill the image", "warning");
+    return;
+}
+if(!formData1.feedback){
+  showSideAlert("Please fill the feedback", "warning");
+  return;
+}
+if(!rating){
+  showSideAlert("Please fill the rating", "warning");
+  return;
+}
     setIsDialogOpen1(false)
     try {
       const response = await axios.post('http://localhost:8000/hospital/saverating', {...formData1,rating:rating});
-      console.log(response, "responseresponseresponse")
       getratings()
-      setMessage('Your data for appointment saved successfully');
       setFormData1({
         name: '',
         image: '',
         feedback: '',
       });
       setRating(null)
-      setShowPopup(true);
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Thank you for geving us rating',
+      });
     } catch (err) {
       console.error(err);
-      setMessage('Error saving data.');
-      setShowPopup(true);
+      Swal.fire({
+        icon: 'warning',
+        title: 'warning',
+        text: 'there is a probleam',
+      });
     }
   };
 
-  const handleClosePopup = () => {
-    setShowPopup(false);
-  };
+ 
 
   const handleRatingChange = (event: React.SyntheticEvent, newValue: number | null) => {
     setRating(newValue);
@@ -324,7 +387,7 @@ export default function Home() {
         </button>
       </div>
       {/* Rating Dialog */}
-      {showPopup && <Popup message={message} onClose={handleClosePopup} />}
+      
       <Dialog open={isDialogOpen1} onOpenChange={setIsDialogOpen1}>
         <DialogContent className="w-full max-w-screen-md xs:h-auto overflow-hidden">
           <DialogHeader>
@@ -340,6 +403,7 @@ export default function Home() {
                     value={formData1.name}
                     handleInputChange={handleInputChange1}
                     redlabel='*'
+                    max={50}
 
                   />
                 </div>
@@ -361,6 +425,7 @@ export default function Home() {
                     value={formData1.feedback}
                     handleInputChange={handleInputChange1}
                     redlabel='*'
+                    max={50}
 
                   />
                 </div>
@@ -399,6 +464,7 @@ export default function Home() {
                     value={formData.name}
                     handleInputChange={handleInputChange}
                     redlabel='*'
+                    max={50}
 
 
                   />
@@ -411,6 +477,7 @@ export default function Home() {
                     value={formData.age}
                     handleInputChange={handleInputChange}
                     redlabel='*'
+                    max={2}
 
 
                   />
@@ -423,6 +490,7 @@ export default function Home() {
                     value={formData.mobile}
                     handleInputChange={handleInputChange}
                     redlabel='*'
+                    max={10}
 
 
                   />
@@ -469,7 +537,7 @@ export default function Home() {
         </DialogContent>
       </Dialog>
 
-
+      <Loading isLoading={isLoading} />
 
     </>
   );
