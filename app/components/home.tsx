@@ -105,12 +105,12 @@ export default function Home() {
   };
 
   const getratings = async () => {
-    setIsLoading(true)
+    // setIsLoading(true)
     try {
       const response = await axios.post('http://localhost:8000/hospital/getrating');
       console.log(response, "rating")
       setRatingdata(response.data);
-      setIsLoading(false)
+      // setIsLoading(false)
     } catch (err) {
       console.error(err);
     }
