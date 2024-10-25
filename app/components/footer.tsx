@@ -3,6 +3,12 @@
 import Image from 'next/image';
 
 export default function Footer() {
+
+    const redirectToFacebook = () => {
+        window.location.href = 'https://www.facebook.com/9887242595'; // Replace with the actual username or ID
+    };
+
+
     return (
         <>
             <div className="grid grid-cols-12 bg-slate-500 p-2">
@@ -54,7 +60,7 @@ export default function Footer() {
                             height={20}
                             onClick={() => { console.log("Facebook") }}
                         />
-                        <span className="text-base font-serif hover:cursor-pointer hover:scale-110 -mt-1 ml-2 font-semibold">Facebook</span>
+                        <span onClick={redirectToFacebook} className="text-base font-serif hover:cursor-pointer hover:scale-110 -mt-1 ml-2 font-semibold">Facebook</span>
                     </div>
                     <div className="text-lg mt-1 -ml-4 flex justify-center">
                         <Image

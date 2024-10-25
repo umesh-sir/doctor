@@ -1,6 +1,7 @@
 'use client'
 
 import Ainput from "@/app/atom/input";
+import Loading from "@/app/atom/loading";
 import TableComponent from "@/app/atom/table";
 import axios from "axios";
 import Image from "next/image";
@@ -27,6 +28,7 @@ const Page = () => {
  
 const [formdata,setFormdata]=useState({date:getCurrentDate()})
 const [Ratingdata, setRatingdata] = useState([]);
+const [isLoading, setIsLoading] = useState(false);
 
 
 const handleInputChange = (name: any, value: any) => {
@@ -42,10 +44,12 @@ useEffect(()=>{
 
 
     const getratings = async () => {
+        setIsLoading(true)
         try {
             const response = await axios.post('http://localhost:8000/hospital/allgetrating'); 
             console.log(response,"ratings")
             setRatingdata(response.data)
+            setIsLoading(false)
         } catch (err) {
             console.error(err);
         } 
@@ -100,8 +104,9 @@ useEffect(()=>{
                 <div className="mt-7 ml-2 rounded h-9 font-bold text-base px-2 pt-1.5 hover:bg-green-400 bg-green-500 lg:col-span-1 md:col-span-1 col-span-1">
                 <button onClick={getratings}>Show</button>
                 </div> */}
-                <div className="col-span-12 mt-2"><TableComponent onButtonClick={handleButtonClick}  onRowDoubleClick={handleRowDoubleClick} data={Ratingdata} headerMapping={headerMapping}></TableComponent></div>
+                <div className="col-span-12 mt-2"><TableComponent onButtonClick={handleButtonClick} buttonname='delete'  onRowDoubleClick={handleRowDoubleClick} data={Ratingdata} headerMapping={headerMapping}></TableComponent></div>
             </div>
+            <Loading isLoading={isLoading} />
         </>
     )
 }

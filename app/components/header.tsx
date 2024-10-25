@@ -179,7 +179,24 @@ return;
   };
 
 
- 
+  const handleClickOutside = (event) => {
+    // Logic to determine if the click is outside the component
+    if (drop && event.target.closest('.dropdown')) {
+      return; // Ignore clicks inside the dropdown
+    }
+    setDrop(false);
+  };
+  
+  useEffect(() => {
+    // Attach the click event listener to the document
+    document.addEventListener('click', handleClickOutside);
+    
+    // Cleanup the event listener on component unmount
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [drop]);
+  
 
 
   return (
@@ -233,7 +250,7 @@ return;
       
         <div className="col-span-2 flex lg:justify-end lg:mr-10 items-center justify-center">
           <FiAlignJustify 
-            onClick={() => setDrop(prev => !prev)} // Toggle dropdown state
+            onClick={() => setDrop(!drop)} // Toggle dropdown state
             className='h-9 w-9 hover:cursor-pointer'
           />
         </div>

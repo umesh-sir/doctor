@@ -105,12 +105,12 @@ export default function Home() {
   };
 
   const getratings = async () => {
-    // setIsLoading(true)
+    setIsLoading(true)
     try {
       const response = await axios.post('http://localhost:8000/hospital/getrating');
       console.log(response, "rating")
       setRatingdata(response.data);
-      // setIsLoading(false)
+      setIsLoading(false)
     } catch (err) {
       console.error(err);
     }
@@ -181,14 +181,15 @@ export default function Home() {
         showSideAlert("Please fill the name", "warning");
         return;
     }
+    if(!formData.age){
+      showSideAlert("Please fill the age", "warning");
+      return;
+  }
     if(!formData.mobile){
       showSideAlert("Please fill the mobile no.", "warning");
       return;
   }
-  if(!formData.age){
-    showSideAlert("Please fill the age", "warning");
-    return;
-}
+
 if(!formData.date){
   showSideAlert("Please fill the date", "warning");
   return;
@@ -360,9 +361,9 @@ if(!rating){
           <button className="btn-22 min-w-72" onClick={contectus}><span>Contect us</span></button>
         </div>
         {/* <div className="col-span-12 lg:-mt-[69px]"><About></About></div> */}
-        <div className="col-span-12 lg:-mt-[69px]"><Services></Services></div>
-        <div className="col-span-12 lg:-mt-[69px]"><Doctors></Doctors></div>
-        <div className="col-span-12 lg:-mt-[69px]"><Gallery></Gallery></div>
+        <div className="col-span-12  -mt-[69px] "><Services></Services></div>
+        <div className="col-span-12 -mt-[69px]"><Doctors></Doctors></div>
+        <div className="col-span-12 -mt-[69px]"><Gallery></Gallery></div>
         {/* Rating Section */}
         <div className="col-span-12">
           <div className="col-span-12">
@@ -407,12 +408,11 @@ if(!rating){
 
                   />
                 </div>
-                <div className='col-span-12 mt-8 md:col-span-6 lg:col-span-6'>
+                <div className='col-span-12 lg:mt-8 md:mt-8 md:ml-0 -ml-[72px] mt-2  md:col-span-6 lg:col-span-6'>
                   <input
                     title='Your Image'
                     type='file'
                     name='image'
-                    // value={formData1.image}
                     onChange={() => { handleFileChange(event) }}
                   />
                 </div>
@@ -429,7 +429,7 @@ if(!rating){
 
                   />
                 </div>
-                <div className='col-span-12 md:col-span-6 lg:col-span-6 flex items-center justify-center lg:mt-4 mt-2'>
+                <div className='col-span-12 md:col-span-6 lg:col-span-6 flex items-center  lg:mt-4 mt-2'>
                 <Rating
         name="simple-controlled"
         value={rating}
@@ -439,7 +439,7 @@ if(!rating){
 
                 </div>
                 <div className="col-span-12 flex justify-center text-red-600 mt-2" >{sidealertmsg}</div>
-                <div className='col-span-12 text-center mt-6'>
+                <div className='col-span-12 text-center lg:mt-6'>
                   <button onClick={saverating} className='hover:cursor-pointer bg-green-500 text-xl px-2 py-1 rounded-tl-xl text-ellipsis whitespace-nowrap rounded-br-xl hover:bg-blue-600'>Submit</button>
                 </div>
               </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import Ainput from "@/app/atom/input";
+import Loading from "@/app/atom/loading";
 import Aselect from "@/app/atom/select";
 import TableComponent from "@/app/atom/table";
 import axios from "axios";
@@ -30,6 +31,7 @@ const [formdata,setFormdata]=useState({date:getCurrentDate(),doctor:'',depart:''
 const [doctoroption, setDoctoroption] = useState([]);
 const [departmentoption, setDepartmentoption] = useState([]);
 const [tabledata, setTabledata] = useState([]);
+const [isLoading, setIsLoading] = useState(false);
 
 
 
@@ -45,11 +47,17 @@ useEffect(()=>{
     getdeprtment()
 },[])
 
+useEffect(()=>{
+  getpatients()
+},[formdata?.depart,formdata?.doctor,formdata?.date])
+
  
   const getdeprtment = async () => {
+    setIsLoading(true)
     try {
       const response = await axios.post('http://localhost:8000/hospital/getdepartment');
       setDepartmentoption(response.data);
+      setIsLoading(false)
     } catch (err) {
       console.error(err);
     }
@@ -57,8 +65,8 @@ useEffect(()=>{
 
   const getpatients = async () => {
     try {
-        const response = await axios.post('http://localhost:8000/hospital/getpatient'); 
-        console.log(response,"ratings")
+        const response = await axios.post('http://localhost:8000/hospital/getpatient',formdata); 
+        console.log(response,"patient")
         setTabledata(response.data)
     } catch (err) {
         console.error(err);
@@ -99,8 +107,11 @@ useEffect(()=>{
        const headerMapping = {
         train_id:'Sr.No.',
         name: 'Full Name',
-        feedback: 'Feedback',
-        Image:'image'
+        doctor: 'Doctor',
+        depart:'Department',
+        mobileno:'Mobile No.',
+        date:'Appointment date',
+        age:'Age (yr)'
       };
       
  
@@ -109,9 +120,9 @@ useEffect(()=>{
       };
       
 
-      const handleButtonClick = async (rowData:any)=>{
-        console.log(rowData,"button")
-      }
+      // const handleButtonClick = async (rowData:any)=>{
+      //   console.log(rowData,"button")
+      // }
 
     return (
         <>
@@ -139,10 +150,11 @@ useEffect(()=>{
                 </div>
                 
                 <div className="lg:mt-7 md:mt-7 mt-2 ml-2 max-w-16  lg:col-span-1 md:col-span-3 col-span-12">
-                <button className="rounded h-9 font-bold text-base px-2 pt-1 hover:bg-green-400 bg-green-500" >Show</button>
+                <button onClick={getpatients} className="rounded h-9 font-bold text-base px-2 pt-1 hover:bg-green-400 bg-green-500" >Show</button>
                 </div>
-                <div className="col-span-12 mt-2"><TableComponent onButtonClick={handleButtonClick}  onRowDoubleClick={handleRowDoubleClick} data={tabledata} headerMapping={headerMapping}></TableComponent></div>
+                <div className="col-span-12 mt-2"><TableComponent onRowDoubleClick={handleRowDoubleClick} data={tabledata} headerMapping={headerMapping}></TableComponent></div>
             </div>
+            <Loading isLoading={isLoading} />
         </>
     )
 }

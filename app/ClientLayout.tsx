@@ -21,8 +21,8 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
       {children}
 
       {/* Render the appropriate footer based on the current page */}
-      {isHospitalPage && <Footer/>}
-      {!isLoginPage && !isHospitalPage && !isPatientviewPage && <Footer/>}
+      <Footer/>
+      {/* {!isLoginPage && !isHospitalPage && !isPatientviewPage && <Footer/>} */}
     </>
   );
 };

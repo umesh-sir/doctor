@@ -49,22 +49,24 @@ export default function Services() {
     <div className=" flex justify-center text-3xl font-bold col-span-12 mt-[69px]">
    -- Services --
     </div>
-                {departments.map((department, index) => (
-                    <div
-                        key={index}
-                        className="lg:col-span-4 col-span-12 md:col-span-4 h-72 w-full rounded bg-slate-200 flex flex-col items-center transition-transform duration-300 ease-in-out hover:scale-y-105"
-                    >
-                        <Image
-                            className="rounded-full h-20 w-20 mb-2"
-                            src={department.img}
-                            alt={department.depart}
-                            width={80}  // Adjust width as needed
-                            height={80} // Adjust height as needed
-                        ></Image>
-                        <div className="text-xl font-semibold text-center">{department.depart}</div>
-                        <div className="text-lg text-center mt-4">{department.desc}</div>
+    {departments.map((department, index) => (
+                <div
+                    key={index}
+                    className={`col-span-4 min-h-72  transform transition-all duration-300 hover:scale-x-105 rounded-lg shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl ${department.color}`} // Use the color class
+                >
+                    <Image
+                        className="rounded-full h-24 w-24 bg-primary mx-auto mt-4 transition-transform duration-300 transform hover:scale-125"
+                        src={department.img}
+                        alt={department.depart}
+                        width={100}
+                        height={100}
+                    />
+                    <div className="p-4 text-center">
+                        <h2 className="text-2xl font-bold ">{department.depart}</h2> {/* Change text color to white for better contrast */}
+                        <p className=" mt-2">{department.desc}</p> {/* Change text color for better contrast */}
                     </div>
-                ))}
+                </div>
+            ))}
             </div>
         </>
     );

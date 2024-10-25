@@ -5,6 +5,7 @@ interface TableComponentProps {
     headerMapping: Record<string, string>; // Mapping of header names to display names
     onRowDoubleClick?: (rowData: Record<string, any>) => void; // Optional callback for double-clicking a row
     onButtonClick?: (rowData: Record<string, any>) => void; // Optional callback for button click
+    buttonname?: string;
 }
 
 const TableComponent: React.FC<TableComponentProps> = ({
@@ -12,6 +13,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
     headerMapping,
     onRowDoubleClick,
     onButtonClick,
+    buttonname,
 }) => {
     const [searchQuery, setSearchQuery] = useState<string>('');
 
@@ -19,7 +21,8 @@ const TableComponent: React.FC<TableComponentProps> = ({
         return <div className='flex justify-center items-center text-xl font-bold h-[400px]'>There is no data found</div>;
     }
 
-    const headers = Object.keys(data[0]);
+    // Extract headers from headerMapping
+    const headers = Object.keys(headerMapping);
 
     const handleRowDoubleClick = (rowData: Record<string, any>) => {
         if (onRowDoubleClick) {
@@ -27,21 +30,26 @@ const TableComponent: React.FC<TableComponentProps> = ({
         }
     };
 
+    // Filter data based on search query
     const filteredData = data.filter((row) =>
-        Object.values(row).some((value) =>
-            String(value).toLowerCase().includes(searchQuery.toLowerCase())
+        headers.some((header) => 
+            String(row[header]).toLowerCase().includes(searchQuery.toLowerCase())
         )
     );
 
+    // Debugging logs
+    console.log("Search Query:", searchQuery);
+    console.log("Filtered Data:", filteredData);
+
     return (
         <div className="relative overflow-hidden" style={{ height: '400px' }}>
-            <div className="flex lg:justify-end  w-full md:justify-end sticky top-0 bg-white p-2">
+            <div className="flex lg:justify-end w-full md:justify-end sticky top-0 bg-white p-2">
                 <input
                     type="text"
                     placeholder="Search..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="border border-gray-300 px-2 py-1 "
+                    className="border border-gray-300 px-2 py-1"
                 />
             </div>
             <div className="overflow-x-auto" style={{ height: 'calc(100% - 40px)', overflowY: 'auto' }}>
@@ -49,8 +57,8 @@ const TableComponent: React.FC<TableComponentProps> = ({
                     <thead className="sticky top-0 bg-gray-100">
                         <tr className="hover:cursor-pointer">
                             {headers.map((header) => (
-                                <th key={header} className="border border-gray-300 px-4 py-2 text-left">
-                                    {headerMapping[header] || header}
+                                <th key={header} className="border border-gray-300 px-4 py-2">
+                                    {headerMapping[header]}
                                 </th>
                             ))}
                             {onButtonClick && <th className="border border-gray-300 px-4 py-2 text-left">Actions</th>}
@@ -74,7 +82,7 @@ const TableComponent: React.FC<TableComponentProps> = ({
                                             className="bg-blue-500 text-white px-2 py-1 rounded"
                                             onClick={() => onButtonClick(row)}
                                         >
-                                            Delete
+                                            {buttonname}
                                         </button>
                                     </td>
                                 )}

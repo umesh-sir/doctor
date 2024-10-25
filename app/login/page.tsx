@@ -144,11 +144,11 @@ export default function Login() {
         if (formData.mobile == data.mobile && formData.password ==data.password  && data.train_id==1) {
             document.cookie = "token=umeshkumawat; path=/";  
             router.push(`/hospital`);
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: 'Admin login successfully',
-              }); 
+            // Swal.fire({
+            //     icon: 'success',
+            //     title: 'Success',
+            //     text: 'Admin login successfully',
+            //   }); 
         } 
     
         else if (formData.mobile == data.mobile && formData.password == data.password ) {
@@ -156,11 +156,11 @@ export default function Login() {
             document.cookie = "token=umeshkumawat; path=/";  
             document.cookie = `userDetails=${JSON.stringify({ email: formData.email })}; path=/`; // Save user details
             router.push(`/ramdeva/patientview`);  
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: 'Login successfully',
-              }); 
+            // Swal.fire({
+            //     icon: 'success',
+            //     title: 'Success',
+            //     text: 'Login successfully',
+            //   }); 
         }else {
                 showSideAlert("Please fill the right credentials", "warning");
                 return;
@@ -243,6 +243,7 @@ export default function Login() {
                     )}
                      {signup && (
                         <div className="col-span-12 w-[300px] lg:w-[400px] md:w-[350px]">
+                            <button  onClick={sendsignupOtp1} className="px-2 py-1 hover:border bg-blue-600 hover:bg-blue-400">Send OTP</button>
                             <Ainput
                                 title="Otp"
                                 type="number"
@@ -253,11 +254,11 @@ export default function Login() {
                             />
                         </div>
                     )}
-                    {signup && (
+                    {/* {signup && (
                         <div className="col-span-12 w-[100px] lg:w-[400px] md:w-[350px]">
-                           <button id="btn-button118" onClick={sendsignupOtp1} className="btn w-[300px] lg:w-[400px] md:w-[350px]">Send OTP</button>
+                        
                         </div>
-                    )}
+                    )} */}
                     {!signup && (
                         <div className="col-span-12 hover:scale-105 flex justify-center">
                             <Link href={'/'}><span className="text-blue-400 text-base hover:underline">Forgot password?</span></Link>

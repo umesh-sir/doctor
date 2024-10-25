@@ -1,10 +1,12 @@
 'use client'
 
 import Ainput from "@/app/atom/input";
+import Loading from "@/app/atom/loading";
 import TableComponent from "@/app/atom/table";
 import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const Page = () => {
 
@@ -26,6 +28,7 @@ const Page = () => {
 
 const [Data,setData]=useState([])
 const [formdata,setFormdata]=useState({date:getCurrentDate()})
+const [isLoading, setIsLoading] = useState(false);
 
 const handleInputChange = (name: any, value: any) => {
     setFormdata((prevData) => ({
@@ -40,6 +43,7 @@ useEffect(()=>{
 
     const getappintment = async () => {
         setData([])
+        setIsLoading(true)
         try {
             const response = await axios.post('http://localhost:8000/hospital/getapointment',{
                 date:formdata?.date
@@ -47,10 +51,12 @@ useEffect(()=>{
             console.log(response.data,"responseresponseresponse")
             console.log(response,"respon")
             setData(response.data)
+            setIsLoading(false)
         } catch (err) {
             console.error(err);
         } 
        };
+
        const headerMapping = {
         srno:'Sr. No.',
         name: 'Full Name',
@@ -66,6 +72,25 @@ useEffect(()=>{
       const handleRowDoubleClick = (rowData:any) => {
         console.log('Double-clicked row data:', rowData);
       };
+
+      
+      const handleButtonClick = async (rowData:any) => {
+        try {
+            const response = await axios.post('http://localhost:8000/hospital/makepatient',rowData); 
+           
+            getappintment()
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Make patient successfully',
+              });
+        } catch (err) {
+            console.error(err);
+        } 
+      };
+
+
+
 
     return (
         <>
@@ -89,9 +114,9 @@ useEffect(()=>{
                 <div className=" mt-7 ml-2 max-w-16  lg:col-span-1 md:col-span-1 col-span-4">
                 <button className="rounded h-9 font-bold text-base px-2 pt-1 hover:bg-green-400 bg-green-500" onClick={getappintment}>Show</button>
                 </div>
-                <div className="col-span-12 mt-2"><TableComponent  onRowDoubleClick={handleRowDoubleClick} data={Data} headerMapping={headerMapping}></TableComponent></div>
+                <div className="col-span-12 mt-2"><TableComponent buttonname='ok'  onRowDoubleClick={handleRowDoubleClick} onButtonClick={handleButtonClick}  data={Data} headerMapping={headerMapping}></TableComponent></div>
             </div>
-
+            <Loading isLoading={isLoading} />
         </>
     )
 }

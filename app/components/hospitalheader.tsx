@@ -193,6 +193,26 @@ const handleLogout = () => {
   router.push('/'); // Redirect to home page
 };
 
+
+const handleClickOutside = (event) => {
+  // Logic to determine if the click is outside the component
+  if (drop && event.target.closest('.dropdown')) {
+    return; // Ignore clicks inside the dropdown
+  }
+  setDrop(false);
+};
+
+useEffect(() => {
+  // Attach the click event listener to the document
+  document.addEventListener('click', handleClickOutside);
+  
+  // Cleanup the event listener on component unmount
+  return () => {
+    document.removeEventListener('click', handleClickOutside);
+  };
+}, [drop]);
+
+
   return (
     <>
     
@@ -244,7 +264,7 @@ const handleLogout = () => {
       
         <div className="col-span-2 flex lg:justify-end lg:mr-10 items-center justify-center">
           <FiAlignJustify 
-            onClick={() => setDrop(prev => !prev)}   
+           onClick={() => setDrop(!drop)}   
             className='h-9 w-9 hover:cursor-pointer'
           />
         </div>
@@ -257,7 +277,7 @@ const handleLogout = () => {
             <ul className="font-bold capitalize rounded    bg-slate-200  lg:w-96 w-80 h-screen absolute top-[70px] right-2" >
             <li className="hover:cursor-pointer py-2 flex pl-5 rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><CgProfile className='-mt-1 pr-2 w-8 h-8' /><span className=' text-lg font-bold font-serif'>Your Profile</span></li>
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/hospital')}><AiOutlineHome className='-mt-1 pr-2 w-8 h-8'  /><span  className=' text-lg font-bold font-serif'>Home</span></li>
-              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/')}><RiHeartAddLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Add Appointment</span></li>
+              <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={takeappointment}><RiHeartAddLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Add Appointment</span></li>
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/hospital/appointments')}><FiAirplay className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Appointments</span></li>
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/hospital/rating')}><BsStarHalf  className='-mt-1 pr-2 w-8 h-8' /><span  className=' text-lg font-bold font-serif'>Ratings</span></li>
               <li className="hover:cursor-pointer py-2 pl-5 flex rounded bg-slate-400 hover:bg-slate-700 border" onClick={() => handleNavigation('/hospital/patient')}><RiTeamLine className='-mt-1 pr-2 w-8 h-8'/><span  className=' text-lg font-bold font-serif'>Patient</span></li>
